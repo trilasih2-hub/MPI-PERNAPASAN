@@ -1,0 +1,2835 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Misi Penjelajah Pecahan — Matematika Kelas 5 Fase C</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-sky: #f0f9ff;
+      --card-shadow: 0 8px 0 rgba(15, 23, 42, 0.12);
+    }
+    body {
+      font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at 10% 10%, #e0f2fe 0%, #fef9c3 48%, #f3e8ff 100%);
+      min-height: 100vh;
+      color: #1e293b;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, .font-display {
+      font-family: 'Fredoka', 'Nunito', sans-serif;
+    }
+    /* Tombol 3D Tactile Ramah Anak */
+    .btn-3d {
+      transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease, filter 0.15s ease;
+      position: relative;
+      user-select: none;
+    }
+    .btn-3d:hover:not(:disabled) {
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+    }
+    .btn-3d:active:not(:disabled) {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.22) !important;
+    }
+    .btn-blue { background: linear-gradient(180deg, #38bdf8, #0284c7); box-shadow: 0 6px 0 #0369a1; color: #fff; }
+    .btn-yellow { background: linear-gradient(180deg, #facc15, #eab308); box-shadow: 0 6px 0 #a16207; color: #1e293b; }
+    .btn-green { background: linear-gradient(180deg, #4ade80, #16a34a); box-shadow: 0 6px 0 #15803d; color: #fff; }
+    .btn-purple { background: linear-gradient(180deg, #c084fc, #9333ea); box-shadow: 0 6px 0 #6b21a8; color: #fff; }
+    .btn-orange { background: linear-gradient(180deg, #fb923c, #ea580c); box-shadow: 0 6px 0 #9a3412; color: #fff; }
+    .btn-pink { background: linear-gradient(180deg, #f472b6, #db2777); box-shadow: 0 6px 0 #9d174d; color: #fff; }
+    .btn-slate { background: linear-gradient(180deg, #94a3b8, #475569); box-shadow: 0 5px 0 #334155; color: #fff; }
+
+    /* Animasi Transisi Halaman & Elemen */
+    @keyframes pagePop {
+      0% { opacity: 0; transform: translateY(16px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-page {
+      animation: pagePop 0.36s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
+    }
+    .animate-float {
+      animation: floatSlow 3.6s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.65); }
+      50% { box-shadow: 0 0 0 14px rgba(250, 204, 21, 0); }
+    }
+    .animate-pulse-glow {
+      animation: pulseGlow 2.2s infinite;
+    }
+
+    /* Tampilan Pecahan Matematika Bertumpuk */
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      margin: 0 3px;
+      font-weight: 800;
+      line-height: 1.05;
+    }
+    .frac-num {
+      border-bottom: 2.5px solid currentColor;
+      padding: 0 5px 2px 5px;
+    }
+    .frac-den {
+      padding: 2px 5px 0 5px;
+    }
+    .mixed-frac {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      vertical-align: middle;
+      font-weight: 800;
+    }
+    .mixed-whole {
+      font-size: 1.25em;
+    }
+
+    /* Potongan Pizza Interaktif */
+    .pizza-slice {
+      cursor: pointer;
+      transition: transform 0.18s ease, fill 0.2s ease, filter 0.2s ease;
+      transform-origin: 120px 120px;
+    }
+    .pizza-slice:hover {
+      filter: brightness(1.08);
+      transform: scale(1.03);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 99px; }
+    ::-webkit-scrollbar-thumb { background: #60a5fa; border-radius: 99px; }
+
+    /* Mode Cetak LKPD */
+    @media print {
+      body { background: #ffffff !important; color: #000 !important; }
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      .print-box { box-shadow: none !important; border: 1.5px solid #334155 !important; }
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-yellow-300 selection:text-slate-900">
+
+  <!-- Toast / Kotak Pesan Pengganti alert() -->
+  <div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2 max-w-sm pointer-events-none no-print"></div>
+
+  <!-- Banner Teks Narasi Aktif (Fallback & Visual Subtitle untuk Siswa) -->
+  <div id="narration-banner" class="hidden fixed bottom-20 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-2xl bg-slate-900/95 text-white px-4 py-3 rounded-2xl shadow-2xl border-2 border-yellow-400 flex items-center gap-3 no-print">
+    <span class="text-2xl animate-bounce">🔊</span>
+    <p id="narration-text" class="text-sm md:text-base font-semibold flex-1 leading-snug"></p>
+    <button onclick="AudioEngine.stopSpeech()" class="px-3 py-1 bg-rose-500 hover:bg-rose-600 rounded-xl text-xs font-bold">Tutup</button>
+  </div>
+
+  <!-- ================= 1. HALAMAN PEMBUKA (SPLASH SCREEN) ================= -->
+  <section id="splash-screen" class="min-h-screen flex flex-col justify-between p-4 md:p-8 relative overflow-hidden">
+    <!-- Dekorasi Latar Geometri -->
+    <div class="absolute -top-10 -left-10 w-44 h-44 bg-sky-300/40 rounded-full blur-xl pointer-events-none"></div>
+    <div class="absolute top-1/4 -right-12 w-56 h-56 bg-purple-300/40 rounded-full blur-xl pointer-events-none"></div>
+    <div class="absolute bottom-10 left-10 w-48 h-48 bg-amber-300/40 rounded-full blur-xl pointer-events-none"></div>
+
+    <!-- Bar Atas Splash -->
+    <header class="max-w-6xl w-full mx-auto flex flex-wrap items-center justify-between gap-3 z-10">
+      <div class="flex items-center gap-2 bg-white/90 backdrop-blur px-4 py-2 rounded-2xl shadow-md border-2 border-sky-200">
+        <span class="text-2xl">🏫</span>
+        <div>
+          <p class="text-xs font-extrabold uppercase tracking-wider text-sky-600">Kurikulum Merdeka • Fase C</p>
+          <p class="text-sm font-black text-slate-800">Matematika Kelas V SD — SDN 3 Kelaten</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button id="splash-music-btn" onclick="AudioEngine.toggleMusic()" class="btn-3d btn-purple px-4 py-2.5 rounded-2xl font-extrabold text-sm flex items-center gap-2">
+          <span id="splash-music-icon">🎵</span>
+          <span id="splash-music-label">Musik Pembuka: Mati</span>
+        </button>
+        <button onclick="AudioEngine.speak('Selamat datang di Misi Penjelajah Pecahan! Petualangan menjumlahkan dan mengurangkan pecahan bersama Ibu Trilasih dari SDN 3 Kelaten. Klik tombol Mulai Petualangan untuk bermain dan belajar!')" class="btn-3d btn-yellow px-4 py-2.5 rounded-2xl font-extrabold text-sm flex items-center gap-2">
+          <span>🔊</span>
+          <span>Dengar Sambutan</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Konten Utama Splash -->
+    <main class="max-w-6xl w-full mx-auto my-auto py-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center z-10">
+      <!-- Kolom Kiri: Judul & CTA -->
+      <div class="lg:col-span-7 text-center lg:text-left space-y-5">
+        <div class="inline-flex items-center gap-2 bg-orange-100 border-2 border-orange-300 text-orange-800 px-4 py-1.5 rounded-full font-extrabold text-sm shadow-sm">
+          <span>🚀</span>
+          <span>Media Pembelajaran Interaktif (MPI)</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 leading-tight drop-shadow-sm">
+          <span class="text-sky-600">MISI</span>
+          <span class="text-orange-500">PENJELAJAH</span>
+          <span class="block text-purple-600">PECAHAN</span>
+        </h1>
+
+        <p class="text-lg sm:text-2xl font-extrabold text-emerald-700 bg-emerald-50/90 border-2 border-emerald-200 px-5 py-3 rounded-2xl inline-block shadow-sm">
+          ✨ Petualangan Menjumlahkan dan Mengurangkan Pecahan ✨
+        </p>
+
+        <p class="text-slate-700 text-base sm:text-lg font-semibold max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+          Ayo jelajahi pulau pecahan biasa dan pecahan campuran dengan penyebut berbeda melalui simulasi visual, eksperimen pizza, permainan seru, dan tantangan harta karun!
+        </p>
+
+        <!-- Kartu Identitas Pengembang -->
+        <div class="bg-white/95 border-2 border-indigo-200 rounded-2xl p-4 shadow-md max-w-lg mx-auto lg:mx-0 flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-100 flex items-center justify-center text-2xl shrink-0">👩‍🏫</div>
+          <div class="text-left">
+            <p class="text-xs font-extrabold uppercase text-indigo-500">Pengembang Media Pembelajaran</p>
+            <p class="text-base font-black text-slate-900">Trilasih, S.Pd.</p>
+            <p class="text-sm font-bold text-slate-600">Guru Kelas V • SDN 3 Kelaten</p>
+          </div>
+        </div>
+
+        <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-4">
+          <button onclick="App.startAdventure()" class="btn-3d btn-green animate-pulse-glow px-8 py-4 rounded-3xl text-xl sm:text-2xl font-black tracking-wide flex items-center gap-3">
+            <span>🧭</span>
+            <span>MULAI PETUALANGAN</span>
+            <span>➡️</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Kolom Kanan: Ilustrasi Kartun Anak SD Belajar Matematika -->
+      <div class="lg:col-span-5 flex justify-center">
+        <div class="bg-white/90 backdrop-blur p-5 rounded-3xl border-4 border-yellow-300 shadow-2xl max-w-md w-full animate-float">
+          <svg viewBox="0 0 360 310" class="w-full h-auto" aria-label="Ilustrasi Anak SD Belajar Pecahan Matematika">
+            <!-- Latar Langit & Papan Tulis -->
+            <rect x="15" y="15" width="330" height="190" rx="22" fill="#0f766e" stroke="#f59e0b" stroke-width="6"/>
+            <!-- Rumus Pecahan di Papan Tulis -->
+            <text x="42" y="65" fill="#fef08a" font-family="Fredoka, sans-serif" font-size="24" font-weight="bold">1/2 + 1/3 = 5/6</text>
+            <text x="42" y="102" fill="#bae6fd" font-family="Nunito, sans-serif" font-size="16" font-weight="bold">KPK(2,3) = 6</text>
+            <!-- Pizza Pecahan di Papan -->
+            <g transform="translate(265, 82)">
+              <circle cx="0" cy="0" r="38" fill="#fde047" stroke="#ea580c" stroke-width="4"/>
+              <path d="M0,0 L0,-38 A38,38 0 0,1 33,19 Z" fill="#f97316"/>
+              <path d="M0,0 L33,19 A38,38 0 0,1 -33,19 Z" fill="#ef4444"/>
+              <line x1="0" y1="-38" x2="0" y2="38" stroke="#9a3412" stroke-width="2"/>
+              <line x1="-33" y1="-19" x2="33" y2="19" stroke="#9a3412" stroke-width="2"/>
+              <line x1="-33" y1="19" x2="33" y2="-19" stroke="#9a3412" stroke-width="2"/>
+            </g>
+            <!-- Karakter Anak SD Ceria -->
+            <!-- Badan Seragam Merah Putih SD -->
+            <path d="M115,285 C115,230 245,230 245,285 Z" fill="#ef4444"/>
+            <path d="M145,235 L180,275 L215,235 Z" fill="#ffffff"/>
+            <!-- Kepala -->
+            <circle cx="180" cy="182" r="46" fill="#fed7aa" stroke="#9a3412" stroke-width="2.5"/>
+            <!-- Rambut -->
+            <path d="M134,175 C134,125 226,125 226,175 C215,152 145,152 134,175 Z" fill="#1e293b"/>
+            <!-- Mata & Senyum -->
+            <circle cx="164" cy="180" r="5" fill="#1e293b"/>
+            <circle cx="196" cy="180" r="5" fill="#1e293b"/>
+            <circle cx="166" cy="178" r="1.8" fill="#ffffff"/>
+            <circle cx="198" cy="178" r="1.8" fill="#ffffff"/>
+            <path d="M166,198 Q180,213 194,198" fill="none" stroke="#9a3412" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- Pipi Merona -->
+            <circle cx="152" cy="193" r="6" fill="#fda4af" opacity="0.7"/>
+            <circle cx="208" cy="193" r="6" fill="#fda4af" opacity="0.7"/>
+            <!-- Tangan Mengangkat Buku -->
+            <rect x="115" y="238" width="130" height="52" rx="10" fill="#3b82f6" stroke="#1d4ed8" stroke-width="3"/>
+            <text x="180" y="270" text-anchor="middle" fill="#ffffff" font-family="Fredoka, sans-serif" font-size="18" font-weight="bold">MATEMATIKA 5</text>
+            <!-- Bintang Dekorasi -->
+            <text x="28" y="255" font-size="28">⭐</text>
+            <text x="302" y="255" font-size="28">🍕</text>
+          </svg>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer Growth Mindset -->
+    <footer class="max-w-4xl w-full mx-auto text-center z-10">
+      <div class="bg-white/85 backdrop-blur px-5 py-2.5 rounded-2xl border border-amber-300 shadow-sm inline-block">
+        <p class="text-xs sm:text-sm font-extrabold text-amber-800">
+          💡 "Jangan takut salah. Setiap kesalahan adalah kesempatan untuk belajar lebih baik."
+        </p>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ================= 2. APLIKASI UTAMA (NAVIGASI + HALAMAN) ================= -->
+  <div id="main-app" class="hidden min-h-screen flex flex-col justify-between pb-24">
+
+    <!-- Header Navigasi Global -->
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b-4 border-sky-200 shadow-md no-print">
+      <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-2">
+        <!-- Brand Kiri -->
+        <div class="flex items-center gap-2.5 cursor-pointer" onclick="App.navigate('home')">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-600 text-white flex items-center justify-center text-xl shadow">🧭</div>
+          <div>
+            <h2 class="font-display text-base sm:text-lg font-black text-slate-900 leading-none">MISI PENJELAJAH PECAHAN</h2>
+            <p class="text-[11px] font-bold text-slate-500">Kelas V SD • SDN 3 Kelaten</p>
+          </div>
+        </div>
+
+        <!-- Skor, Bintang & Kontrol Audio -->
+        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          <!-- Poin & Bintang -->
+          <div class="flex items-center gap-2 bg-amber-100 border-2 border-amber-300 px-3 py-1.5 rounded-2xl">
+            <span class="text-base">⭐</span>
+            <span id="global-stars" class="font-black text-amber-800 text-sm">0</span>
+            <span class="text-slate-300">|</span>
+            <span class="text-base">🏆</span>
+            <span id="global-score" class="font-black text-orange-700 text-sm">0 Poin</span>
+          </div>
+
+          <!-- Tombol Ulangi Narasi -->
+          <button onclick="AudioEngine.repeatSpeech()" title="Ulangi Narasi Suara" class="btn-3d btn-yellow px-3 py-1.5 rounded-xl text-xs sm:text-sm font-extrabold flex items-center gap-1">
+            <span>🔊</span>
+            <span class="hidden sm:inline">Narasi</span>
+          </button>
+
+          <!-- Tombol Mute / Unmute Narasi -->
+          <button id="btn-mute-speech" onclick="AudioEngine.toggleMute()" title="Aktifkan/Matikan Suara Narasi" class="btn-3d btn-blue px-3 py-1.5 rounded-xl text-xs sm:text-sm font-extrabold flex items-center gap-1">
+            <span id="icon-mute-speech">🗣️</span>
+            <span id="label-mute-speech" class="hidden md:inline">Suara: Aktif</span>
+          </button>
+
+          <!-- Tombol Musik Latar -->
+          <button id="btn-bg-music" onclick="AudioEngine.toggleMusic()" title="Nyalakan/Matikan Musik Latar" class="btn-3d btn-purple px-3 py-1.5 rounded-xl text-xs sm:text-sm font-extrabold flex items-center gap-1">
+            <span id="icon-bg-music">🎵</span>
+            <span id="label-bg-music" class="hidden md:inline">Musik: Mati</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Sub-bar Breadcrumb & Navigasi Cepat -->
+      <div class="bg-sky-50/90 border-t border-sky-100 px-3 sm:px-6 py-1.5">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 text-xs sm:text-sm">
+          <div class="flex items-center gap-2 font-bold text-slate-600">
+            <button onclick="App.navigate('home')" class="hover:text-sky-600 flex items-center gap-1 font-extrabold text-sky-700">
+              <span>🏠</span> Beranda
+            </button>
+            <span>/</span>
+            <span id="breadcrumb-current" class="font-black text-slate-800">Menu Utama</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button onclick="App.prevSection()" class="px-2.5 py-1 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 font-bold text-slate-700">⬅️ Sebelumnya</button>
+            <button onclick="App.nextSection()" class="px-2.5 py-1 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 font-bold text-slate-700">Berikutnya ➡️</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Kontainer Halaman Dinamis -->
+    <main id="page-container" class="max-w-7xl w-full mx-auto px-3 sm:px-6 py-6 flex-1">
+      <!-- Konten halaman dirender oleh JavaScript -->
+    </main>
+
+    <!-- Navigasi Bawah Tetap (Bottom Bar Mobile & Desktop) -->
+    <nav class="fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t-4 border-indigo-200 shadow-lg py-2 px-3 no-print">
+      <div class="max-w-5xl mx-auto flex items-center justify-between gap-2">
+        <button onclick="App.goBack()" class="btn-3d btn-slate px-3 sm:px-4 py-2 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center gap-1.5">
+          <span>↩️</span>
+          <span>Kembali</span>
+        </button>
+
+        <button onclick="App.navigate('home')" class="btn-3d btn-blue px-4 sm:px-6 py-2 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center gap-1.5">
+          <span>🏠</span>
+          <span>Menu Utama</span>
+        </button>
+
+        <div class="hidden sm:flex items-center gap-1.5 text-xs font-extrabold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl">
+          <span>🌱</span>
+          <span>"Kamu hebat karena terus mencoba!"</span>
+        </div>
+
+        <button onclick="App.nextSection()" class="btn-3d btn-orange px-3 sm:px-4 py-2 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center gap-1.5">
+          <span>Berikutnya</span>
+          <span>➡️</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ================= SCRIPT UTAMA MPI ================= -->
+  <script>
+    /* =========================================================================
+       1. MESIN AUDIO & NARASI BAHASA INDONESIA (Web Speech API + Web Audio API)
+       ========================================================================= */
+    const AudioEngine = {
+      isMuted: false,
+      isMusicPlaying: false,
+      lastText: "Selamat datang di Misi Penjelajah Pecahan! Pilih menu untuk mulai belajar.",
+      audioCtx: null,
+      musicInterval: null,
+      musicStep: 0,
+
+      initContext() {
+        if (!this.audioCtx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.audioCtx = new AudioContext();
+        }
+        if (this.audioCtx && this.audioCtx.state === 'suspended') {
+          this.audioCtx.resume();
+        }
+      },
+
+      // Suara Efek Klik Tombol
+      playClick() {
+        try {
+          this.initContext();
+          if (!this.audioCtx) return;
+          const osc = this.audioCtx.createOscillator();
+          const gain = this.audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(520, this.audioCtx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(780, this.audioCtx.currentTime + 0.07);
+          gain.gain.setValueAtTime(0.12, this.audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + 0.08);
+          osc.connect(gain);
+          gain.connect(this.audioCtx.destination);
+          osc.start();
+          osc.stop(this.audioCtx.currentTime + 0.08);
+        } catch (e) {}
+      },
+
+      // Suara Tepuk Tangan & Melodi Menang Saat Benar
+      playSuccess() {
+        try {
+          this.initContext();
+          if (!this.audioCtx) return;
+          const now = this.audioCtx.currentTime;
+          // Nada Arpeggio Ceria (C5 - E5 - G5 - C6)
+          const notes = [523.25, 659.25, 783.99, 1046.50];
+          notes.forEach((freq, idx) => {
+            const osc = this.audioCtx.createOscillator();
+            const gain = this.audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.09);
+            gain.gain.setValueAtTime(0.18, now + idx * 0.09);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.35);
+            osc.connect(gain);
+            gain.connect(this.audioCtx.destination);
+            osc.start(now + idx * 0.09);
+            osc.stop(now + idx * 0.09 + 0.35);
+          });
+
+          // Simulasi Tepuk Tangan (White Noise Burst Berulang)
+          for (let i = 0; i < 6; i++) {
+            const bufferSize = this.audioCtx.sampleRate * 0.06;
+            const buffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let j = 0; j < bufferSize; j++) {
+              data[j] = (Math.random() * 2 - 1) * Math.exp(-j / (bufferSize * 0.35));
+            }
+            const noise = this.audioCtx.createBufferSource();
+            noise.buffer = buffer;
+            const filter = this.audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.value = 1200 + (i % 2) * 300;
+            const gain = this.audioCtx.createGain();
+            gain.gain.setValueAtTime(0.14, now + 0.15 + i * 0.11);
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(this.audioCtx.destination);
+            noise.start(now + 0.15 + i * 0.11);
+          }
+        } catch (e) {}
+      },
+
+      // Suara Motivasi Lembut Saat Salah
+      playEncourage() {
+        try {
+          this.initContext();
+          if (!this.audioCtx) return;
+          const now = this.audioCtx.currentTime;
+          const notes = [392.00, 349.23, 392.00]; // G4 - F4 - G4 lembut
+          notes.forEach((freq, idx) => {
+            const osc = this.audioCtx.createOscillator();
+            const gain = this.audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.14);
+            gain.gain.setValueAtTime(0.12, now + idx * 0.14);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.14 + 0.25);
+            osc.connect(gain);
+            gain.connect(this.audioCtx.destination);
+            osc.start(now + idx * 0.14);
+            osc.stop(now + idx * 0.14 + 0.25);
+          });
+        } catch (e) {}
+      },
+
+      // Musik Latar Ceria Ramah Anak (Dapat Dinyalakan/Dimatikan)
+      toggleMusic() {
+        this.playClick();
+        if (this.isMusicPlaying) {
+          this.stopMusic();
+        } else {
+          this.startMusic();
+        }
+        this.updateAudioUI();
+      },
+
+      startMusic() {
+        this.initContext();
+        if (this.musicInterval) clearInterval(this.musicInterval);
+        this.isMusicPlaying = true;
+        // Melodi Pentatonik Ceria Anak SD
+        const melody = [
+          523.25, 587.33, 659.25, 783.99, 659.25, 587.33, 523.25, 0,
+          587.33, 659.25, 783.99, 880.00, 783.99, 659.25, 587.33, 0
+        ];
+        this.musicStep = 0;
+        this.musicInterval = setInterval(() => {
+          if (!this.isMusicPlaying || !this.audioCtx) return;
+          const freq = melody[this.musicStep % melody.length];
+          this.musicStep++;
+          if (freq > 0) {
+            const now = this.audioCtx.currentTime;
+            const osc = this.audioCtx.createOscillator();
+            const gain = this.audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now);
+            gain.gain.setValueAtTime(0.045, now);
+            gain.gain.exponentialRampToValueAtTime(0.0008, now + 0.34);
+            osc.connect(gain);
+            gain.connect(this.audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.35);
+          }
+        }, 420);
+      },
+
+      stopMusic() {
+        this.isMusicPlaying = false;
+        if (this.musicInterval) {
+          clearInterval(this.musicInterval);
+          this.musicInterval = null;
+        }
+      },
+
+      // Narasi Bahasa Indonesia (Web Speech API id-ID + Banner Teks)
+      speak(text, force = true) {
+        if (!text) return;
+        this.lastText = text;
+        const banner = document.getElementById('narration-banner');
+        const bannerText = document.getElementById('narration-text');
+        if (banner && bannerText) {
+          bannerText.textContent = text;
+          banner.classList.remove('hidden');
+        }
+
+        if (this.isMuted) return;
+
+        if ('speechSynthesis' in window) {
+          try {
+            if (force) window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'id-ID';
+            utter.rate = 0.96;
+            utter.pitch = 1.08;
+            const voices = window.speechSynthesis.getVoices();
+            const idVoice = voices.find(v => v.lang && v.lang.toLowerCase().includes('id'));
+            if (idVoice) utter.voice = idVoice;
+            utter.onend = () => {
+              setTimeout(() => {
+                if (banner) banner.classList.add('hidden');
+              }, 2200);
+            };
+            window.speechSynthesis.speak(utter);
+          } catch (e) {
+            // Fallback teks tetap tampil di banner
+          }
+        }
+      },
+
+      repeatSpeech() {
+        this.playClick();
+        if (this.isMuted) {
+          this.isMuted = false;
+          this.updateAudioUI();
+        }
+        this.speak(this.lastText, true);
+      },
+
+      stopSpeech() {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+        }
+        const banner = document.getElementById('narration-banner');
+        if (banner) banner.classList.add('hidden');
+      },
+
+      toggleMute() {
+        this.playClick();
+        this.isMuted = !this.isMuted;
+        if (this.isMuted) {
+          this.stopSpeech();
+          App.showToast('🔇 Suara narasi dimatikan. Teks panduan tetap tersedia.');
+        } else {
+          App.showToast('🔊 Suara narasi Bahasa Indonesia diaktifkan.');
+          this.speak(this.lastText, true);
+        }
+        this.updateAudioUI();
+      },
+
+      updateAudioUI() {
+        // Update Splash Button
+        const splashIcon = document.getElementById('splash-music-icon');
+        const splashLabel = document.getElementById('splash-music-label');
+        if (splashIcon && splashLabel) {
+          splashIcon.textContent = this.isMusicPlaying ? '🎶' : '🎵';
+          splashLabel.textContent = this.isMusicPlaying ? 'Musik Pembuka: Nyala' : 'Musik Pembuka: Mati';
+        }
+        // Update Header Buttons
+        const muteIcon = document.getElementById('icon-mute-speech');
+        const muteLabel = document.getElementById('label-mute-speech');
+        if (muteIcon && muteLabel) {
+          muteIcon.textContent = this.isMuted ? '🔇' : '🗣️';
+          muteLabel.textContent = this.isMuted ? 'Suara: Mati' : 'Suara: Aktif';
+        }
+        const musicIcon = document.getElementById('icon-bg-music');
+        const musicLabel = document.getElementById('label-bg-music');
+        if (musicIcon && musicLabel) {
+          musicIcon.textContent = this.isMusicPlaying ? '🎶' : '🎵';
+          musicLabel.textContent = this.isMusicPlaying ? 'Musik: Nyala' : 'Musik: Mati';
+        }
+      }
+    };
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+    }
+
+    /* =========================================================================
+       2. UTILITAS MATEMATIKA PECAHAN (KPK, FPB, KONVERSI, FORMAT HTML)
+       ========================================================================= */
+    const MathFrac = {
+      gcd(a, b) {
+        a = Math.abs(Math.round(a));
+        b = Math.abs(Math.round(b));
+        while (b !== 0) {
+          const t = b;
+          b = a % b;
+          a = t;
+        }
+        return a || 1;
+      },
+      lcm(a, b) {
+        a = Math.abs(Math.round(a));
+        b = Math.abs(Math.round(b));
+        if (a === 0 || b === 0) return 0;
+        return (a * b) / this.gcd(a, b);
+      },
+      toImproper(whole, num, den) {
+        const sign = whole < 0 ? -1 : 1;
+        const absWhole = Math.abs(whole);
+        return {
+          num: sign * (absWhole * den + num),
+          den: den
+        };
+      },
+      toMixed(num, den) {
+        const sign = num < 0 ? -1 : 1;
+        const absNum = Math.abs(num);
+        const whole = Math.floor(absNum / den);
+        const rem = absNum % den;
+        return { sign, whole, num: rem, den };
+      },
+      simplify(num, den) {
+        if (num === 0) return { num: 0, den: 1, factor: 1 };
+        const g = this.gcd(num, den);
+        return { num: num / g, den: den / g, factor: g };
+      },
+      htmlFrac(num, den, colorClass = '') {
+        return `<span class="frac ${colorClass}"><span class="frac-num">${num}</span><span class="frac-den">${den}</span></span>`;
+      },
+      htmlMixed(whole, num, den, colorClass = '') {
+        if (!whole || whole === 0) return this.htmlFrac(num, den, colorClass);
+        if (!num || num === 0) return `<span class="font-black text-lg ${colorClass}">${whole}</span>`;
+        return `<span class="mixed-frac ${colorClass}"><span class="mixed-whole">${whole}</span>${this.htmlFrac(num, den)}</span>`;
+      },
+      // SVG Batang Pecahan
+      svgBar(num, den, fillColor = '#38bdf8', label = '') {
+        const safeDen = Math.max(1, Math.min(24, den));
+        const safeNum = Math.max(0, Math.min(safeDen, num));
+        const width = 260;
+        const height = 42;
+        const partW = width / safeDen;
+        let rects = '';
+        for (let i = 0; i < safeDen; i++) {
+          const filled = i < safeNum;
+          rects += `<rect x="${i * partW}" y="0" width="${partW}" height="${height}" fill="${filled ? fillColor : '#f1f5f9'}" stroke="#334155" stroke-width="2"/>`;
+        }
+        return `
+          <div class="flex flex-col items-center gap-1">
+            <svg viewBox="0 0 ${width} ${height}" class="w-full max-w-[260px] h-10 rounded-lg overflow-hidden shadow-sm">
+              ${rects}
+            </svg>
+            ${label ? `<span class="text-xs font-extrabold text-slate-700">${label}</span>` : ''}
+          </div>
+        `;
+      },
+      // SVG Lingkaran Pecahan
+      svgCircle(num, den, fillColor = '#fb923c', label = '') {
+        const safeDen = Math.max(1, Math.min(24, den));
+        const safeNum = Math.max(0, Math.min(safeDen, num));
+        const cx = 60, cy = 60, r = 52;
+        let paths = '';
+        if (safeDen === 1) {
+          paths = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${safeNum >= 1 ? fillColor : '#f1f5f9'}" stroke="#334155" stroke-width="2.5"/>`;
+        } else {
+          for (let i = 0; i < safeDen; i++) {
+            const a1 = (i * 2 * Math.PI) / safeDen - Math.PI / 2;
+            const a2 = ((i + 1) * 2 * Math.PI) / safeDen - Math.PI / 2;
+            const x1 = cx + r * Math.cos(a1);
+            const y1 = cy + r * Math.sin(a1);
+            const x2 = cx + r * Math.cos(a2);
+            const y2 = cy + r * Math.sin(a2);
+            const largeArc = (a2 - a1) > Math.PI ? 1 : 0;
+            const filled = i < safeNum;
+            paths += `<path d="M${cx},${cy} L${x1.toFixed(2)},${y1.toFixed(2)} A${r},${r} 0 ${largeArc},1 ${x2.toFixed(2)},${y2.toFixed(2)} Z" fill="${filled ? fillColor : '#f1f5f9'}" stroke="#334155" stroke-width="2"/>`;
+          }
+        }
+        return `
+          <div class="flex flex-col items-center gap-1">
+            <svg viewBox="0 0 120 120" class="w-24 h-24 drop-shadow-sm">${paths}</svg>
+            ${label ? `<span class="text-xs font-extrabold text-slate-700">${label}</span>` : ''}
+          </div>
+        `;
+      }
+    };
+
+    /* =========================================================================
+       3. DATA LENGKAP MATERI (A - I), PRAKTIKUM, GAME, LKPD, EVALUASI
+       ========================================================================= */
+    const MATERI_DATA = [
+      {
+        id: 'A',
+        title: 'A. Mengenal Pecahan Biasa',
+        badge: 'Dasar Pecahan',
+        color: 'sky',
+        tujuan: 'Siswa mampu menjelaskan pengertian pecahan biasa serta membedakan pembilang dan penyebut melalui benda konkret.',
+        narasi: 'Submateri A: Mengenal Pecahan Biasa. Pecahan biasa adalah bilangan yang menyatakan bagian dari keseluruhan, ditulis dalam bentuk a per b. Angka di atas disebut pembilang, dan angka di bawah disebut penyebut.',
+        penjelasan: 'Bayangkan kamu memotong 1 loyang pizza menjadi 4 bagian sama besar, lalu kamu memakan 1 potong. Bagian pizza yang kamu makan bernilai <b>1/4</b> (dibaca satu per empat). Angka <b>1</b> adalah <b>pembilang</b> (banyak bagian yang dipilih), dan angka <b>4</b> adalah <b>penyebut</b> (jumlah seluruh potongan yang sama besar).',
+        langkah: [
+          'Hitung jumlah seluruh bagian yang dibagi sama besar untuk menentukan <b>Penyebut</b> (angka bawah).',
+          'Hitung jumlah bagian yang diarsir atau diambil untuk menentukan <b>Pembilang</b> (angka atas).',
+          'Tuliskan dalam bentuk <b>Pembilang / Penyebut</b>.'
+        ],
+        visualHTML: () => `
+          <div class="flex flex-wrap justify-center gap-6 items-center bg-sky-50 p-4 rounded-2xl border-2 border-sky-200">
+            ${MathFrac.svgCircle(1, 4, '#38bdf8', '1/4 Bagian Pizza')}
+            ${MathFrac.svgBar(3, 5, '#fb923c', '3/5 Batang Cokelat')}
+          </div>
+        `,
+        contohSoal: 'Sebuah batang cokelat dibagi menjadi 5 potong sama besar. Rani memakan 3 potong. Berapa pecahan cokelat yang dimakan Rani?',
+        pembahasan: 'Jumlah seluruh potongan = 5 (penyebut). Banyak potongan yang dimakan = 3 (pembilang). Jadi, pecahannya adalah <b>3/5</b>.',
+        quiz: {
+          q: 'Sebuah kue dipotong menjadi 8 bagian sama besar. Budi mengambil 3 potong. Pecahan bagian kue Budi adalah...',
+          options: ['3/8', '8/3', '3/5', '5/8'],
+          answer: 0,
+          explain: '3 bagian yang diambil menjadi pembilang, dan 8 total potongan menjadi penyebut, sehingga menjadi 3/8.'
+        }
+      },
+      {
+        id: 'B',
+        title: 'B. Mengenal Pecahan Campuran',
+        badge: 'Bilangan Bulat + Pecahan',
+        color: 'orange',
+        tujuan: 'Siswa mampu mengenal pecahan campuran dan mengubahnya menjadi pecahan biasa maupun sebaliknya.',
+        narasi: 'Submateri B: Mengenal Pecahan Campuran. Pecahan campuran terdiri atas bilangan bulat dan pecahan biasa, contohnya satu satu per dua. Pecahan campuran muncul ketika pembilang lebih besar dari penyebut.',
+        penjelasan: 'Jika kamu memiliki <b>1 loyang pizza utuh</b> ditambah <b>1/2 loyang pizza</b>, maka jumlah seluruh pizzamu adalah <b>1 1/2</b>. Bilangan seperti inilah yang disebut <b>pecahan campuran</b> karena mencampurkan bilangan bulat (1) dan pecahan biasa (1/2).',
+        langkah: [
+          '<b>Mengubah Campuran ke Pecahan Biasa:</b> Kalikan bilangan bulat dengan penyebut, lalu tambahkan pembilang. Penyebut tetap sama.',
+          'Contoh: <b>1 1/2</b> = ((1 × 2) + 1) / 2 = <b>3/2</b>.',
+          '<b>Mengubah Pecahan Biasa (Pembilang > Penyebut) ke Campuran:</b> Bagi pembilang dengan penyebut. Hasil bagi menjadi bilangan bulat, sisa bagi menjadi pembilang baru.'
+        ],
+        visualHTML: () => `
+          <div class="flex flex-wrap justify-center gap-4 items-center bg-orange-50 p-4 rounded-2xl border-2 border-orange-200">
+            ${MathFrac.svgCircle(4, 4, '#fb923c', '1 Pizza Utuh (4/4)')}
+            <span class="text-2xl font-black text-orange-600">+</span>
+            ${MathFrac.svgCircle(1, 2, '#facc15', '1/2 Pizza')}
+            <span class="text-2xl font-black text-orange-600">=</span>
+            <div class="bg-white px-4 py-2 rounded-2xl border-2 border-orange-300 font-black text-orange-700 text-xl">1 ½ = 3/2</div>
+          </div>
+        `,
+        contohSoal: 'Ubahlah pecahan campuran 2 1/3 menjadi pecahan biasa!',
+        pembahasan: 'Kalikan bilangan bulat (2) dengan penyebut (3), lalu tambah pembilang (1): (2 × 3) + 1 = 6 + 1 = 7. Penyebut tetap 3. Hasilnya adalah <b>7/3</b>.',
+        quiz: {
+          q: 'Bentuk pecahan biasa dari 3 1/4 adalah...',
+          options: ['7/4', '12/4', '13/4', '4/13'],
+          answer: 2,
+          explain: '(3 × 4) + 1 = 12 + 1 = 13, penyebut tetap 4, jadi 13/4.'
+        }
+      },
+      {
+        id: 'C',
+        title: 'C. Mengenal Pecahan Senilai',
+        badge: 'Nilai Sama',
+        color: 'emerald',
+        tujuan: 'Siswa mampu menentukan pecahan senilai dengan mengalikan atau membagi pembilang dan penyebut dengan bilangan yang sama.',
+        narasi: 'Submateri C: Mengenal Pecahan Senilai. Pecahan senilai adalah pecahan-pecahan yang memiliki nilai besar bagian yang sama walaupun angka pembilang dan penyebutnya berbeda, misalnya satu per dua sama dengan dua per empat atau tiga per enam.',
+        penjelasan: 'Perhatikan gambar lingkaran di bawah! Setengah loyang pizza (<b>1/2</b>) besarnya sama persis dengan 2 potong dari 4 bagian (<b>2/4</b>) dan sama dengan 3 potong dari 6 bagian (<b>3/6</b>). Pecahan-pecahan tersebut disebut <b>pecahan senilai</b>.',
+        langkah: [
+          'Kalikan pembilang dan penyebut dengan bilangan bulat yang sama (bukan nol). Contoh: (1×3)/(2×3) = <b>3/6</b>.',
+          'Atau bagilah pembilang dan penyebut dengan bilangan yang sama untuk menyederhanakan pecahan. Contoh: (4÷2)/(6÷2) = <b>2/3</b>.'
+        ],
+        visualHTML: () => `
+          <div class="flex flex-wrap justify-center gap-6 items-center bg-emerald-50 p-4 rounded-2xl border-2 border-emerald-200">
+            ${MathFrac.svgCircle(1, 2, '#10b981', '1/2')}
+            <span class="text-2xl font-black text-emerald-600">=</span>
+            ${MathFrac.svgCircle(2, 4, '#10b981', '2/4')}
+            <span class="text-2xl font-black text-emerald-600">=</span>
+            ${MathFrac.svgCircle(3, 6, '#10b981', '3/6')}
+          </div>
+        `,
+        contohSoal: 'Tentukan pecahan senilai dengan 1/3 yang berpenyebut 6!',
+        pembahasan: 'Agar penyebut 3 menjadi 6, kita kalikan dengan 2. Maka pembilang juga dikali 2: (1 × 2)/(3 × 2) = <b>2/6</b>.',
+        quiz: {
+          q: 'Pecahan yang senilai dengan 2/3 adalah...',
+          options: ['4/6', '3/6', '2/6', '5/6'],
+          answer: 0,
+          explain: 'Pembilang dan penyebut dikali 2: (2×2)/(3×2) = 4/6.'
+        }
+      },
+      {
+        id: 'D',
+        title: 'D. Menentukan KPK untuk Menyamakan Penyebut',
+        badge: 'Kunci Utama',
+        color: 'purple',
+        tujuan: 'Siswa mampu menentukan Kelipatan Persekutuan Terkecil (KPK) dari dua bilangan penyebut agar dua pecahan dapat dijumlahkan atau dikurangkan.',
+        narasi: 'Submateri D: Menentukan KPK untuk Menyamakan Penyebut. Pecahan dengan penyebut berbeda tidak bisa langsung dijumlahkan. Kita harus mencari KPK dari kedua penyebut terlebih dahulu.',
+        penjelasan: 'Mengapa penyebut harus disamakan? Karena potongan kue per-2 ukurannya berbeda dengan potongan kue per-3! Dengan mencari <b>KPK (Kelipatan Persekutuan Terkecil)</b> dari kedua penyebut, kita membagi kue menjadi ukuran potongan yang sama besar.',
+        langkah: [
+          'Tuliskan kelipatan dari penyebut pertama. Contoh kelipatan 2: 2, 4, <b>6</b>, 8, 10, <b>12</b>...',
+          'Tuliskan kelipatan dari penyebut kedua. Contoh kelipatan 3: 3, <b>6</b>, 9, <b>12</b>, 15...',
+          'Pilih kelipatan yang sama dan paling kecil, yaitu <b>6</b>. Jadi KPK dari 2 dan 3 adalah <b>6</b>.'
+        ],
+        visualHTML: () => `
+          <div class="bg-purple-50 p-4 rounded-2xl border-2 border-purple-200 text-center space-y-2">
+            <p class="font-extrabold text-purple-900">Kelipatan 2: <span class="bg-white px-2 py-0.5 rounded border">2</span>, <span class="bg-white px-2 py-0.5 rounded border">4</span>, <span class="bg-yellow-300 px-2 py-0.5 rounded border-2 border-purple-600 font-black">6</span>, <span class="bg-white px-2 py-0.5 rounded border">8</span>, 10, 12</p>
+            <p class="font-extrabold text-purple-900">Kelipatan 3: <span class="bg-white px-2 py-0.5 rounded border">3</span>, <span class="bg-yellow-300 px-2 py-0.5 rounded border-2 border-purple-600 font-black">6</span>, <span class="bg-white px-2 py-0.5 rounded border">9</span>, 12, 15</p>
+            <p class="text-sm font-black text-purple-700">✨ KPK dari 2 dan 3 adalah 6!</p>
+          </div>
+        `,
+        contohSoal: 'Tentukan KPK dari penyebut pecahan 3/4 dan 1/6!',
+        pembahasan: 'Kelipatan 4: 4, 8, <b>12</b>, 16. Kelipatan 6: 6, <b>12</b>, 18. Kelipatan persekutuan terkecilnya adalah <b>12</b>.',
+        quiz: {
+          q: 'KPK dari 4 dan 6 untuk menyamakan penyebut pecahan adalah...',
+          options: ['10', '12', '24', '8'],
+          answer: 1,
+          explain: 'Kelipatan 4 = 4, 8, 12... dan kelipatan 6 = 6, 12... Jadi KPK-nya adalah 12.'
+        }
+      },
+      {
+        id: 'E',
+        title: 'E. Penjumlahan Pecahan Biasa Penyebut Berbeda',
+        badge: 'Operasi Penjumlahan',
+        color: 'blue',
+        tujuan: 'Siswa mampu menghitung penjumlahan dua pecahan biasa yang penyebutnya berbeda secara runtut dan tepat.',
+        narasi: 'Submateri E: Penjumlahan Pecahan Biasa dengan Penyebut Berbeda. Contoh: satu per dua ditambah satu per tiga. Langkah satu, tentukan KPK dari dua dan tiga yaitu enam. Langkah dua, ubah menjadi pecahan senilai tiga per enam ditambah dua per enam. Langkah tiga, jumlahkan pembilangnya menjadi lima per enam.',
+        penjelasan: 'Untuk menjumlahkan pecahan biasa dengan penyebut berbeda, kita wajib menyamakan penyebutnya menggunakan KPK, lalu menjumlahkan <b>pembilangnya saja</b> (penyebut tetap).',
+        langkah: [
+          '<b>Langkah 1:</b> Menentukan KPK dari 2 dan 3, yaitu <b>6</b>.',
+          '<b>Langkah 2:</b> Mengubah pecahan menjadi pecahan senilai: <b>1/2 = 3/6</b> dan <b>1/3 = 2/6</b>.',
+          '<b>Langkah 3:</b> Menjumlahkan pembilang: <b>3/6 + 2/6 = (3 + 2)/6 = 5/6</b>.'
+        ],
+        visualHTML: () => `
+          <div class="flex flex-wrap justify-center gap-3 items-center bg-blue-50 p-4 rounded-2xl border-2 border-blue-200">
+            ${MathFrac.svgBar(3, 6, '#38bdf8', '1/2 = 3/6')}
+            <span class="text-2xl font-black text-blue-600">+</span>
+            ${MathFrac.svgBar(2, 6, '#facc15', '1/3 = 2/6')}
+            <span class="text-2xl font-black text-blue-600">=</span>
+            ${MathFrac.svgBar(5, 6, '#22c55e', 'Hasil = 5/6')}
+          </div>
+        `,
+        contohSoal: 'Hitunglah hasil dari 1/2 + 1/3!',
+        pembahasan: 'KPK(2, 3) = 6.<br>1/2 = (1×3)/(2×3) = 3/6.<br>1/3 = (1×2)/(3×2) = 2/6.<br>3/6 + 2/6 = <b>5/6</b>.',
+        quiz: {
+          q: 'Hasil dari 1/2 + 1/3 adalah...',
+          options: ['2/5', '5/6', '2/6', '3/5'],
+          answer: 1,
+          explain: '1/2 + 1/3 = 3/6 + 2/6 = 5/6.'
+        }
+      },
+      {
+        id: 'F',
+        title: 'F. Pengurangan Pecahan Biasa Penyebut Berbeda',
+        badge: 'Operasi Pengurangan',
+        color: 'rose',
+        tujuan: 'Siswa mampu menghitung pengurangan dua pecahan biasa yang penyebutnya berbeda dengan tepat.',
+        narasi: 'Submateri F: Pengurangan Pecahan Biasa dengan Penyebut Berbeda. Contoh: tiga per empat dikurangi satu per dua. KPK dari empat dan dua adalah empat. Ubah satu per dua menjadi dua per empat. Lalu kurangkan pembilangnya: tiga per empat dikurangi dua per empat sama dengan satu per empat.',
+        penjelasan: 'Sama seperti penjumlahan, pada pengurangan pecahan biasa berbeda penyebut, kita samakan penyebutnya dulu memakai KPK, lalu kurangkan pembilangnya.',
+        langkah: [
+          '<b>Langkah 1:</b> Tentukan KPK dari penyebut 4 dan 2, yaitu <b>4</b>.',
+          '<b>Langkah 2:</b> Ubah ke pecahan senilai: <b>3/4</b> tetap <b>3/4</b>, dan <b>1/2 = 2/4</b>.',
+          '<b>Langkah 3:</b> Kurangkan pembilang: <b>3/4 - 2/4 = (3 - 2)/4 = 1/4</b>.'
+        ],
+        visualHTML: () => `
+          <div class="flex flex-wrap justify-center gap-3 items-center bg-rose-50 p-4 rounded-2xl border-2 border-rose-200">
+            ${MathFrac.svgCircle(3, 4, '#f43f5e', 'Mulai: 3/4')}
+            <span class="text-2xl font-black text-rose-600">−</span>
+            ${MathFrac.svgCircle(2, 4, '#94a3b8', 'Dikurangi: 1/2 = 2/4')}
+            <span class="text-2xl font-black text-rose-600">=</span>
+            ${MathFrac.svgCircle(1, 4, '#10b981', 'Sisa: 1/4')}
+          </div>
+        `,
+        contohSoal: 'Hitunglah hasil dari 3/4 - 1/2!',
+        pembahasan: 'KPK dari 4 dan 2 adalah 4.<br>3/4 - 1/2 = 3/4 - 2/4 = <b>1/4</b>.',
+        quiz: {
+          q: 'Hasil dari 3/4 - 1/2 adalah...',
+          options: ['2/2', '1/4', '2/4', '1/2'],
+          answer: 1,
+          explain: 'KPK(4,2) = 4. Jadi 3/4 - 2/4 = 1/4.'
+        }
+      },
+      {
+        id: 'G',
+        title: 'G. Penjumlahan Pecahan Campuran Penyebut Berbeda',
+        badge: 'Campuran (+)',
+        color: 'amber',
+        tujuan: 'Siswa mampu menjumlahkan dua pecahan campuran dengan penyebut berbeda melalui pengubahan ke pecahan biasa maupun pengelompokan.',
+        narasi: 'Submateri G: Penjumlahan Pecahan Campuran dengan Penyebut Berbeda. Contoh: satu satu per dua ditambah dua satu per tiga. Ubah menjadi pecahan biasa tiga per dua ditambah tujuh per tiga. KPK dari dua dan tiga adalah enam. Sembilan per enam ditambah empat belas per enam sama dengan dua puluh tiga per enam, atau tiga lima per enam.',
+        penjelasan: 'Cara paling aman dan anti-keliru menjumlahkan pecahan campuran adalah mengubah kedua pecahan campuran menjadi <b>pecahan biasa</b> terlebih dahulu, menyamakan penyebut dengan KPK, menjumlahkan pembilang, lalu mengubah hasilnya kembali menjadi pecahan campuran.',
+        langkah: [
+          '<b>Langkah 1:</b> Ubah pecahan campuran menjadi pecahan biasa: <b>1 1/2 = 3/2</b> dan <b>2 1/3 = 7/3</b>.',
+          '<b>Langkah 2:</b> Cari KPK dari 2 dan 3, yaitu <b>6</b>.',
+          '<b>Langkah 3:</b> Samakan penyebut: <b>3/2 = 9/6</b> dan <b>7/3 = 14/6</b>.',
+          '<b>Langkah 4:</b> Jumlahkan pembilang: <b>9/6 + 14/6 = 23/6</b>.',
+          '<b>Langkah 5:</b> Ubah ke pecahan campuran: 23 ÷ 6 = 3 sisa 5, hasilnya <b>3 5/6</b>.'
+        ],
+        visualHTML: () => `
+          <div class="bg-amber-50 p-4 rounded-2xl border-2 border-amber-200 text-center font-extrabold text-slate-800 space-y-1">
+            <p class="text-lg">1 ½ + 2 ⅓ = <span class="text-blue-700">3/2 + 7/3</span></p>
+            <p class="text-lg">= <span class="text-purple-700">9/6 + 14/6</span> = <span class="text-orange-700">23/6</span> = <span class="bg-emerald-200 px-3 py-0.5 rounded-xl text-emerald-900">3 5/6</span></p>
+          </div>
+        `,
+        contohSoal: 'Hitunglah hasil dari 1 1/2 + 2 1/3!',
+        pembahasan: 'Ubah menjadi pecahan biasa: 3/2 + 7/3.<br>KPK dari 2 dan 3 adalah 6.<br>9/6 + 14/6 = 23/6.<br>Hasilnya <b>3 5/6</b>.',
+        quiz: {
+          q: 'Hasil dari 1 1/2 + 2 1/3 adalah...',
+          options: ['3 2/5', '3 5/6', '3 1/6', '4 1/6'],
+          answer: 1,
+          explain: '3/2 + 7/3 = 9/6 + 14/6 = 23/6 = 3 5/6.'
+        }
+      },
+      {
+        id: 'H',
+        title: 'H. Pengurangan Pecahan Campuran & Teknik Meminjam',
+        badge: 'Teknik Meminjam',
+        color: 'indigo',
+        tujuan: 'Siswa mampu mengurangkan pecahan campuran berbeda penyebut, termasuk menggunakan teknik meminjam 1 bilangan utuh menjadi pecahan.',
+        narasi: 'Submateri H: Pengurangan Pecahan Campuran dengan Penyebut Berbeda dan Teknik Meminjam. Contoh: tiga satu per empat dikurangi satu satu per dua. Jika diubah ke pecahan biasa menjadi tiga belas per empat dikurangi enam per empat sama dengan tujuh per empat atau satu tiga per empat. Kita juga bisa memakai teknik meminjam satu bilangan bulat menjadi empat per empat.',
+        penjelasan: 'Saat mengurangkan pecahan campuran seperti <b>3 1/4 − 1 1/2</b>, setelah penyebut disamakan menjadi <b>3 1/4 − 1 2/4</b>, pecahan <b>1/4</b> tidak cukup dikurangi <b>2/4</b>! Di sinilah kita menggunakan <b>Teknik Meminjam</b> (meminjam 1 bilangan utuh = 4/4) atau mengubah seluruhnya menjadi pecahan biasa.',
+        langkah: [
+          '<b>Cara 1 (Ubah ke Pecahan Biasa):</b><br>3 1/4 − 1 1/2 = <b>13/4 − 3/2</b>.<br>Samakan penyebut (KPK 4): <b>13/4 − 6/4 = 7/4 = 1 3/4</b>.',
+          '<b>Cara 2 (Teknik Meminjam 1 Bilangan Utuh):</b><br>Samakan penyebut dulu: 3 1/4 − 1 2/4.<br>Karena 1/4 &lt; 2/4, pinjam <b>1</b> dari angka 3 (1 = 4/4).<br>Maka 3 1/4 berubah menjadi <b>2 + 4/4 + 1/4 = 2 5/4</b>.<br>Sekarang kurangkan: (2 − 1) + (5/4 − 2/4) = <b>1 3/4</b>!'
+        ],
+        visualHTML: () => `
+          <div class="bg-indigo-50 p-4 rounded-2xl border-2 border-indigo-200 space-y-2 text-center">
+            <p class="font-black text-indigo-900">Ilustrasi Teknik Meminjam pada 3 ¼ − 1 ½</p>
+            <div class="flex flex-wrap justify-center items-center gap-2 text-sm sm:text-base font-extrabold">
+              <span class="bg-white px-3 py-1.5 rounded-xl border">3 ¼ − 1 2/4</span>
+              <span>➡️ Pinjam 1 (= 4/4) ➡️</span>
+              <span class="bg-yellow-200 px-3 py-1.5 rounded-xl border border-amber-400">2 5/4 − 1 2/4</span>
+              <span>=</span>
+              <span class="bg-emerald-200 px-3 py-1.5 rounded-xl border border-emerald-500 text-emerald-950">1 3/4</span>
+            </div>
+          </div>
+        `,
+        contohSoal: 'Hitunglah hasil dari 3 1/4 - 1 1/2!',
+        pembahasan: 'Ubah menjadi pecahan biasa: 13/4 - 3/2.<br>Samakan penyebut menjadi per-4: 13/4 - 6/4 = 7/4.<br>Ubah ke pecahan campuran: <b>1 3/4</b>.',
+        quiz: {
+          q: 'Pada soal 3 1/4 - 1 2/4, jika kita meminjam 1 dari bilangan bulat 3, maka 3 1/4 berubah menjadi...',
+          options: ['2 1/4', '2 5/4', '3 5/4', '2 3/4'],
+          answer: 1,
+          explain: '1 bilangan utuh = 4/4. Ditambah 1/4 menjadi 5/4, sedangkan bilangan bulat 3 berkurang 1 menjadi 2. Jadi 2 5/4.'
+        }
+      },
+      {
+        id: 'I',
+        title: 'I. Menyelesaikan Soal Cerita Sehari-hari',
+        badge: 'Meaningful & HOTS',
+        color: 'teal',
+        tujuan: 'Siswa mampu memecahkan masalah kontekstual sehari-hari yang berkaitan dengan penjumlahan dan pengurangan pecahan.',
+        narasi: 'Submateri I: Menyelesaikan Soal Cerita. Kata kunci membeli lagi atau ditambah berarti penjumlahan. Kata kunci digunakan, diberikan, atau sisa berarti pengurangan.',
+        penjelasan: 'Dalam kehidupan sehari-hari—seperti mengukur panjang pita, menimbang tepung kue, atau membagi buah—kita sering menjumpai pecahan. Bacalah cerita dengan teliti untuk menentukan apakah soal harus <b>dijumlahkan (+)</b> atau <b>dikurangkan (−)</b>.',
+        langkah: [
+          '<b>1. Pahami Masalah (Diketahui):</b> Catat semua bilangan pecahan yang ada di cerita.',
+          '<b>2. Tentukan Operasi (Ditanya):</b> Kata <i>"membeli lagi, digabung, seluruhnya"</i> = <b>Penjumlahan (+)</b>. Kata <i>"digunakan, dipotong, diberikan, sisa"</i> = <b>Pengurangan (−)</b>.',
+          '<b>3. Hitung & Simpulkan:</b> Samakan penyebut dengan KPK, hitung hasilnya, dan tulis satuan lengkapnya.'
+        ],
+        visualHTML: () => `
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-teal-50 p-4 rounded-2xl border-2 border-teal-200 text-sm font-bold">
+            <div class="bg-white p-3 rounded-xl border border-teal-200">
+              <p class="font-black text-emerald-700">➕ Kata Kunci Penjumlahan:</p>
+              <p class="text-slate-600 mt-1">Membeli lagi, menambah, digabung, total seluruhnya.</p>
+            </div>
+            <div class="bg-white p-3 rounded-xl border border-rose-200">
+              <p class="font-black text-rose-700">➖ Kata Kunci Pengurangan:</p>
+              <p class="text-slate-600 mt-1">Digunakan, dipakai, diberikan, dipotong, berapa sisanya.</p>
+            </div>
+          </div>
+        `,
+        contohSoal: 'Ibu mempunyai 3 1/2 kg tepung. Digunakan 1 3/4 kg untuk membuat kue. Berapa kg sisa tepung Ibu?',
+        pembahasan: 'Operasi pengurangan: 3 1/2 − 1 3/4 = 7/2 − 7/4.<br>KPK(2, 4) = 4 → 14/4 − 7/4 = 7/4 = <b>1 3/4 kg</b>.',
+        quiz: {
+          q: 'Rani memiliki pita 2 1/2 m, lalu membeli lagi 1 1/4 m. Panjang pita Rani seluruhnya adalah...',
+          options: ['3 1/4 m', '3 3/4 m', '3 2/6 m', '4 1/4 m'],
+          answer: 1,
+          explain: '2 1/2 + 1 1/4 = 5/2 + 5/4 = 10/4 + 5/4 = 15/4 = 3 3/4 meter.'
+        }
+      }
+    ];
+
+    /* =========================================================================
+       4. DATA PRAKTIKUM PIZZA PECAHAN (4 EKSPERIMEN)
+       ========================================================================= */
+    const PRAKTIKUM_DATA = [
+      {
+        id: 0,
+        title: 'Eksperimen 1: Penjumlahan 1/2 + 1/3',
+        desc: '1 loyang pizza dibagi menjadi <b>6 potongan</b> sama besar (karena KPK dari 2 dan 3 adalah 6). Klik <b>3 potongan</b> berwarna biru untuk mewakili <b>1/2</b>, lalu klik <b>2 potongan</b> berwarna oranye untuk mewakili <b>1/3</b>!',
+        totalSlices: 6,
+        targetA: 3,
+        targetB: 2,
+        mode: 'add',
+        question: 'Berapa total potongan pizza per-6 yang terwarnai dari gabungan 1/2 (3 potong) dan 1/3 (2 potong)?',
+        expectedFraction: '5/6',
+        conclusionHint: '1/2 senilai dengan 3/6 dan 1/3 senilai dengan 2/6, sehingga 1/2 + 1/3 = 5/6 loyang pizza.'
+      },
+      {
+        id: 1,
+        title: 'Eksperimen 2: Pengurangan 3/4 − 1/2',
+        desc: '1 loyang pizza dibagi menjadi <b>4 potongan</b> sama besar. Awalnya tersedia <b>3 potong (3/4)</b>. Klik untuk <b>mengurangi/menghapus 2 potong</b> (karena 1/2 = 2/4) sehingga tersisa hasil pengurangannya!',
+        totalSlices: 4,
+        initialSelected: 3,
+        targetRemaining: 1,
+        mode: 'sub',
+        question: 'Dari 3 potong (3/4) pizza, setelah diambil 1/2 loyang (2 potong), berapa pecahan pizza yang tersisa?',
+        expectedFraction: '1/4',
+        conclusionHint: 'Karena 1/2 = 2/4, maka 3/4 dikurangi 2/4 menyisakan 1/4 loyang pizza.'
+      },
+      {
+        id: 2,
+        title: 'Eksperimen 3: Penjumlahan Campuran 1 1/2 + 2 1/3',
+        desc: 'Kita sudah memiliki <b>3 loyang pizza utuh</b> (1 + 2 = 3). Pada loyang ke-4 yang dibagi 6 potong, klik <b>3 potong</b> (dari 1/2) dan <b>2 potong</b> (dari 1/3) untuk melihat total seluruh pizza!',
+        totalSlices: 6,
+        wholeBase: 3,
+        targetA: 3,
+        targetB: 2,
+        mode: 'add',
+        question: 'Jika 3 loyang pizza utuh digabung dengan pecahan yang kamu pilih di loyang ke-4, berapa hasil akhir 1 1/2 + 2 1/3?',
+        expectedFraction: '3 5/6',
+        conclusionHint: '1 1/2 + 2 1/3 = (1+2) + (3/6 + 2/6) = 3 5/6 loyang pizza.'
+      },
+      {
+        id: 3,
+        title: 'Eksperimen 4: Pengurangan Campuran 3 1/4 − 1 1/2',
+        desc: 'Awalnya ada <b>3 1/4</b> pizza. Setelah dikurangi 1 utuh, tersisa <b>2 1/4</b>. Karena 1/4 tidak cukup dikurangi 1/2 (2/4), kita meminjam 1 pizza utuh menjadi 4/4 sehingga menjadi <b>1 loyang utuh + 5 potongan per-4</b>. Klik untuk menyisakan hasil akhir (3 potong per-4 di atas 1 loyang utuh)!',
+        totalSlices: 4,
+        wholeBase: 1,
+        initialSelected: 4,
+        targetRemaining: 3,
+        mode: 'sub',
+        question: 'Berapa hasil akhir dari 3 1/4 − 1 1/2 setelah menggunakan teknik meminjam 1 loyang utuh?',
+        expectedFraction: '1 3/4',
+        conclusionHint: '3 1/4 − 1 1/2 = 13/4 − 6/4 = 7/4 = 1 3/4 loyang pizza.'
+      }
+    ];
+
+    /* =========================================================================
+       5. DATA GAME EDUKATIF (3 GAME × 3 LEVEL)
+       ========================================================================= */
+    const GAME1_QUESTIONS = {
+      1: [
+        { q: '1/2 + 1/4 = ...', opts: ['2/6', '3/4', '2/4', '1/6'], ans: 1, hint: 'KPK dari 2 dan 4 adalah 4. Ubah 1/2 menjadi 2/4, lalu tambahkan 1/4!' },
+        { q: '2/3 + 1/6 = ...', opts: ['5/6', '3/9', '3/6', '4/6'], ans: 0, hint: '2/3 senilai dengan 4/6. Jadi 4/6 + 1/6 = 5/6.' },
+        { q: '3/4 − 1/2 = ...', opts: ['2/2', '1/4', '2/4', '1/2'], ans: 1, hint: 'Ubah 1/2 menjadi 2/4, lalu 3/4 − 2/4 = 1/4.' }
+      ],
+      2: [
+        { q: '1/2 + 1/3 = ...', opts: ['2/5', '5/6', '3/6', '4/6'], ans: 1, hint: 'KPK dari 2 dan 3 adalah 6. 3/6 + 2/6 = 5/6.' },
+        { q: '5/6 − 1/3 = ...', opts: ['4/3', '1/2', '2/6', '4/6'], ans: 1, hint: '1/3 = 2/6. Maka 5/6 − 2/6 = 3/6, disederhanakan menjadi 1/2!' },
+        { q: '2/5 + 1/2 = ...', opts: ['3/7', '9/10', '7/10', '3/10'], ans: 1, hint: 'KPK(5, 2) = 10. 4/10 + 5/10 = 9/10.' }
+      ],
+      3: [
+        { q: '1 1/2 + 2 1/3 = ...', opts: ['3 2/5', '3 5/6', '3 1/6', '4 1/6'], ans: 1, hint: '3/2 + 7/3 = 9/6 + 14/6 = 23/6 = 3 5/6.' },
+        { q: '3 1/4 − 1 1/2 = ...', opts: ['2 1/4', '1 3/4', '2 3/4', '1 1/4'], ans: 1, hint: '13/4 − 6/4 = 7/4 = 1 3/4.' },
+        { q: '4 1/3 − 1 2/3 = ...', opts: ['3 1/3', '2 2/3', '3 2/3', '2 1/3'], ans: 1, hint: 'Pinjam 1 dari 4 menjadi 3 4/3 − 1 2/3 = 2 2/3.' }
+      ]
+    };
+
+    const GAME2_STEPS = {
+      1: {
+        soal: 'Susunlah langkah penyelesaian <b>1/2 + 1/3</b> dari awal hingga akhir!',
+        steps: [
+          'Menentukan KPK dari penyebut 2 dan 3, yaitu 6.',
+          'Mengubah menjadi pecahan senilai: 1/2 = 3/6 dan 1/3 = 2/6.',
+          'Menjumlahkan pembilang: 3/6 + 2/6 = 5/6.'
+        ]
+      },
+      2: {
+        soal: 'Susunlah langkah penyelesaian <b>1 1/2 + 2 1/3</b> secara berurutan!',
+        steps: [
+          'Mengubah pecahan campuran ke pecahan biasa: 3/2 + 7/3.',
+          'Menyamakan penyebut dengan KPK 6 menjadi 9/6 + 14/6.',
+          'Menjumlahkan pembilang: 9/6 + 14/6 = 23/6.',
+          'Mengubah hasil ke pecahan campuran menjadi 3 5/6.'
+        ]
+      },
+      3: {
+        soal: 'Susunlah langkah teknik meminjam pada <b>3 1/4 − 1 1/2</b>!',
+        steps: [
+          'Menyamakan penyebut pecahan: 3 1/4 − 1 2/4.',
+          'Meminjam 1 bilangan utuh (= 4/4) dari 3 sehingga menjadi 2 5/4.',
+          'Mengurangkan bilangan bulat dan pecahan: (2 − 1) + (5/4 − 2/4).',
+          'Menuliskan hasil akhir yaitu 1 3/4.'
+        ]
+      }
+    };
+
+    const GAME3_TREASURE = {
+      1: [
+        { chest: 'Peti Kayu', q: '1/3 + 1/6 = ...', opts: ['1/2', '2/9', '2/6', '1/6'], ans: 0, hint: '2/6 + 1/6 = 3/6 = 1/2.' },
+        { chest: 'Peti Perunggu', q: '3/4 − 1/4 = ...', opts: ['1/2', '2/0', '1/4', '3/4'], ans: 0, hint: '3/4 − 1/4 = 2/4 = 1/2.' },
+        { chest: 'Peti Perak', q: '2/5 + 3/10 = ...', opts: ['7/10', '5/15', '5/10', '6/10'], ans: 0, hint: '4/10 + 3/10 = 7/10.' }
+      ],
+      2: [
+        { chest: 'Peti Zamrud', q: '2/3 + 1/4 = ...', opts: ['11/12', '3/7', '8/12', '9/12'], ans: 0, hint: 'KPK(3,4)=12. 8/12 + 3/12 = 11/12.' },
+        { chest: 'Peti Safir', q: '5/6 − 1/2 = ...', opts: ['1/3', '4/4', '2/6', '1/2'], ans: 0, hint: '5/6 − 3/6 = 2/6 = 1/3.' },
+        { chest: 'Peti Rubi', q: '3/4 + 2/3 = ...', opts: ['1 5/12', '5/7', '1 1/12', '17/24'], ans: 0, hint: '9/12 + 8/12 = 17/12 = 1 5/12.' }
+      ],
+      3: [
+        { chest: 'Peti Berlian', q: '2 2/3 + 1 1/4 = ...', opts: ['3 11/12', '3 3/7', '4 1/12', '3 7/12'], ans: 0, hint: '8/3 + 5/4 = 32/12 + 15/12 = 47/12 = 3 11/12.' },
+        { chest: 'Peti Mahkota', q: '3 1/2 − 1 3/4 = ...', opts: ['1 3/4', '2 1/4', '1 1/4', '2 3/4'], ans: 0, hint: '7/2 − 7/4 = 14/4 − 7/4 = 7/4 = 1 3/4.' },
+        { chest: 'Peti Emas Legendaris', q: '5 1/6 − 2 2/3 = ...', opts: ['2 1/2', '3 1/2', '2 5/6', '3 1/6'], ans: 0, hint: '31/6 − 8/3 = 31/6 − 16/6 = 15/6 = 2 3/6 = 2 1/2.' }
+      ]
+    };
+
+    /* =========================================================================
+       6. DATA EVALUASI (15 SOAL PILIHAN GANDA SESUAI KISI-KISI)
+       ========================================================================= */
+    const EVALUASI_SOAL = [
+      // 1-3: Penjumlahan pecahan biasa berbeda penyebut
+      {
+        no: 1, kategori: 'Penjumlahan Pecahan Biasa',
+        soal: 'Hasil penjumlahan dari 1/2 + 1/3 adalah ....',
+        opsi: ['2/5', '5/6', '2/6', '3/5'],
+        kunci: 1,
+        pembahasan: 'KPK dari 2 dan 3 adalah 6. Ubah menjadi pecahan senilai: 1/2 = 3/6 dan 1/3 = 2/6. Jumlahkan pembilangnya: 3/6 + 2/6 = 5/6.'
+      },
+      {
+        no: 2, kategori: 'Penjumlahan Pecahan Biasa',
+        soal: 'Hasil dari 2/3 + 1/4 adalah ....',
+        opsi: ['3/7', '3/12', '11/12', '9/12'],
+        kunci: 2,
+        pembahasan: 'KPK dari 3 dan 4 adalah 12. 2/3 = 8/12 dan 1/4 = 3/12. Jadi 8/12 + 3/12 = 11/12.'
+      },
+      {
+        no: 3, kategori: 'Penjumlahan Pecahan Biasa',
+        soal: 'Hasil paling sederhana dari 1/4 + 3/8 adalah ....',
+        opsi: ['4/12', '5/8', '4/8', '1/2'],
+        kunci: 1,
+        pembahasan: 'KPK dari 4 dan 8 adalah 8. 1/4 = 2/8. Maka 2/8 + 3/8 = 5/8.'
+      },
+      // 4-6: Pengurangan pecahan biasa berbeda penyebut
+      {
+        no: 4, kategori: 'Pengurangan Pecahan Biasa',
+        soal: 'Hasil pengurangan dari 3/4 − 1/2 adalah ....',
+        opsi: ['2/2', '1/4', '2/4', '1/2'],
+        kunci: 1,
+        pembahasan: 'KPK dari 4 dan 2 adalah 4. Ubah 1/2 menjadi 2/4. Lalu 3/4 − 2/4 = 1/4.'
+      },
+      {
+        no: 5, kategori: 'Pengurangan Pecahan Biasa',
+        soal: 'Hasil paling sederhana dari 5/6 − 1/3 adalah ....',
+        opsi: ['4/3', '1/2', '2/6', '4/6'],
+        kunci: 1,
+        pembahasan: 'KPK dari 6 dan 3 adalah 6. 1/3 = 2/6. Jadi 5/6 − 2/6 = 3/6, disederhanakan dibagi 3 menjadi 1/2.'
+      },
+      {
+        no: 6, kategori: 'Pengurangan Pecahan Biasa',
+        soal: 'Hasil dari 4/5 − 1/2 adalah ....',
+        opsi: ['3/3', '3/10', '5/10', '2/10'],
+        kunci: 1,
+        pembahasan: 'KPK dari 5 dan 2 adalah 10. 4/5 = 8/10 dan 1/2 = 5/10. Maka 8/10 − 5/10 = 3/10.'
+      },
+      // 7-9: Penjumlahan pecahan campuran berbeda penyebut
+      {
+        no: 7, kategori: 'Penjumlahan Pecahan Campuran',
+        soal: 'Hasil penjumlahan dari 1 1/2 + 2 1/3 adalah ....',
+        opsi: ['3 2/5', '3 5/6', '3 1/6', '4 1/6'],
+        kunci: 1,
+        pembahasan: 'Ubah ke pecahan biasa: 3/2 + 7/3. Samakan penyebut (KPK 6): 9/6 + 14/6 = 23/6 = 3 5/6.'
+      },
+      {
+        no: 8, kategori: 'Penjumlahan Pecahan Campuran',
+        soal: 'Hasil dari 2 2/3 + 1 1/4 adalah ....',
+        opsi: ['3 3/7', '3 11/12', '4 1/12', '3 7/12'],
+        kunci: 1,
+        pembahasan: '8/3 + 5/4 = 32/12 + 15/12 = 47/12 = 3 11/12.'
+      },
+      {
+        no: 9, kategori: 'Penjumlahan Pecahan Campuran',
+        soal: 'Hasil dari 1 3/4 + 2 1/2 adalah ....',
+        opsi: ['3 4/6', '4 1/4', '3 1/4', '4 3/4'],
+        kunci: 1,
+        pembahasan: '7/4 + 5/2 = 7/4 + 10/4 = 17/4 = 4 1/4.'
+      },
+      // 10-12: Pengurangan pecahan campuran berbeda penyebut
+      {
+        no: 10, kategori: 'Pengurangan Pecahan Campuran',
+        soal: 'Hasil pengurangan dari 3 1/4 − 1 1/2 adalah ....',
+        opsi: ['2 1/4', '1 3/4', '2 3/4', '1 1/4'],
+        kunci: 1,
+        pembahasan: 'Ubah ke pecahan biasa: 13/4 − 3/2 = 13/4 − 6/4 = 7/4 = 1 3/4.'
+      },
+      {
+        no: 11, kategori: 'Pengurangan Pecahan Campuran',
+        soal: 'Hasil dari 4 1/6 − 1 2/3 adalah ....',
+        opsi: ['3 1/2', '2 1/2', '2 5/6', '3 1/6'],
+        kunci: 1,
+        pembahasan: '25/6 − 5/3 = 25/6 − 10/6 = 15/6 = 2 3/6 = 2 1/2.'
+      },
+      {
+        no: 12, kategori: 'Pengurangan Pecahan Campuran',
+        soal: 'Hasil dari 5 1/3 − 2 3/4 adalah ....',
+        opsi: ['3 7/12', '2 7/12', '3 5/12', '2 5/12'],
+        kunci: 1,
+        pembahasan: '16/3 − 11/4 = 64/12 − 33/12 = 31/12 = 2 7/12.'
+      },
+      // 13-15: Soal cerita kontekstual & HOTS
+      {
+        no: 13, kategori: 'Soal Cerita Kontekstual',
+        soal: 'Rani memiliki pita sepanjang 2 1/2 meter. Ia membeli lagi 1 1/4 meter untuk menghias kado. Panjang pita Rani seluruhnya adalah ....',
+        opsi: ['3 1/4 meter', '3 3/4 meter', '3 2/6 meter', '4 1/4 meter'],
+        kunci: 1,
+        pembahasan: '2 1/2 + 1 1/4 = 5/2 + 5/4 = 10/4 + 5/4 = 15/4 = 3 3/4 meter.'
+      },
+      {
+        no: 14, kategori: 'Soal Cerita Kontekstual',
+        soal: 'Ibu mempunyai tepung terigu sebanyak 3 1/2 kg. Tepung tersebut digunakan sebanyak 1 3/4 kg untuk membuat bolu. Sisa tepung Ibu adalah ....',
+        opsi: ['2 1/4 kg', '1 3/4 kg', '1 1/4 kg', '2 3/4 kg'],
+        kunci: 1,
+        pembahasan: '3 1/2 − 1 3/4 = 7/2 − 7/4 = 14/4 − 7/4 = 7/4 = 1 3/4 kg.'
+      },
+      {
+        no: 15, kategori: 'Soal Cerita HOTS',
+        soal: 'Ayah memiliki tali sepanjang 4 1/2 meter. Tali itu digunakan 1 2/3 meter untuk mengikat kayu dan 1 1/4 meter untuk jemuran. Sisa tali Ayah sekarang adalah ....',
+        opsi: ['1 7/12 meter', '2 5/12 meter', '1 5/12 meter', '2 7/12 meter'],
+        kunci: 0,
+        pembahasan: 'Total dipakai = 1 2/3 + 1 1/4 = 5/3 + 5/4 = 20/12 + 15/12 = 35/12. Sisa tali = 4 1/2 − 35/12 = 9/2 − 35/12 = 54/12 − 35/12 = 19/12 = 1 7/12 meter.'
+      }
+    ];
+
+    /* =========================================================================
+       7. STATE & NAVIGASI UTAMA APLIKASI
+       ========================================================================= */
+    const App = {
+      currentRoute: 'home',
+      history: ['home'],
+      routesOrder: ['home', 'materi', 'simulasi', 'praktikum', 'game', 'lkpd', 'evaluasi', 'pengembang'],
+      routeNames: {
+        home: 'Menu Utama',
+        materi: '1. Materi Pembelajaran',
+        simulasi: '2. Simulator Pecahan',
+        praktikum: '3. Praktikum Pizza Pecahan',
+        game: '4. Arena Game Edukatif',
+        lkpd: '5. LKPD Interaktif',
+        evaluasi: '6. Evaluasi Belajar (15 Soal)',
+        pengembang: '7. Profil Pengembang'
+      },
+      score: 0,
+      stars: 0,
+      // State Sub-fitur
+      materiIdx: 0,
+      materiQuizAnswered: {},
+      simState: {
+        type1: 'biasa', w1: 0, n1: 1, d1: 2,
+        op: '+',
+        type2: 'biasa', w2: 0, n2: 1, d2: 3,
+        stepMode: false,
+        revealedSteps: 99,
+        result: null
+      },
+      prakIdx: 0,
+      prakSlices: [], // array state per slice: 0=empty, 1=A, 2=B
+      gameTab: 1,
+      gameLevel: 1,
+      g1Index: 0,
+      g2Order: [],
+      g3Index: 0,
+      evalIndex: 0,
+      evalAnswers: Array(15).fill(null),
+      evalSubmitted: false,
+
+      init() {
+        try {
+          const savedScore = localStorage.getItem('mpp_score');
+          const savedStars = localStorage.getItem('mpp_stars');
+          if (savedScore) this.score = parseInt(savedScore, 10) || 0;
+          if (savedStars) this.stars = parseInt(savedStars, 10) || 0;
+        } catch (e) {}
+        this.updateScoreUI();
+      },
+
+      addReward(pts, starCount = 1) {
+        this.score += pts;
+        this.stars += starCount;
+        try {
+          localStorage.setItem('mpp_score', this.score);
+          localStorage.setItem('mpp_stars', this.stars);
+        } catch (e) {}
+        this.updateScoreUI();
+      },
+
+      updateScoreUI() {
+        const sEl = document.getElementById('global-score');
+        const stEl = document.getElementById('global-stars');
+        if (sEl) sEl.textContent = `${this.score} Poin`;
+        if (stEl) stEl.textContent = this.stars;
+      },
+
+      showToast(msg, type = 'info') {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+        const colors = {
+          info: 'bg-slate-900 border-sky-400 text-white',
+          success: 'bg-emerald-700 border-yellow-300 text-white',
+          warn: 'bg-amber-600 border-white text-white'
+        };
+        const el = document.createElement('div');
+        el.className = `pointer-events-auto px-4 py-3 rounded-2xl border-2 shadow-xl text-sm font-extrabold transition-all transform translate-y-0 ${colors[type] || colors.info}`;
+        el.textContent = msg;
+        container.appendChild(el);
+        setTimeout(() => {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(-10px)';
+          setTimeout(() => el.remove(), 300);
+        }, 3200);
+      },
+
+      startAdventure() {
+        AudioEngine.playClick();
+        document.getElementById('splash-screen').classList.add('hidden');
+        document.getElementById('main-app').classList.remove('hidden');
+        this.navigate('home');
+        AudioEngine.speak('Halo Penjelajah Pecahan! Pilih salah satu dari tujuh menu petualangan di layar untuk mulai belajar.');
+      },
+
+      navigate(route) {
+        AudioEngine.playClick();
+        if (this.currentRoute !== route) {
+          this.history.push(route);
+        }
+        this.currentRoute = route;
+        document.getElementById('breadcrumb-current').textContent = this.routeNames[route] || 'Menu Utama';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        this.renderPage();
+      },
+
+      goBack() {
+        AudioEngine.playClick();
+        if (this.history.length > 1) {
+          this.history.pop();
+          const prev = this.history[this.history.length - 1];
+          this.currentRoute = prev;
+          document.getElementById('breadcrumb-current').textContent = this.routeNames[prev];
+          this.renderPage();
+        } else {
+          this.navigate('home');
+        }
+      },
+
+      prevSection() {
+        const idx = this.routesOrder.indexOf(this.currentRoute);
+        const prevIdx = (idx - 1 + this.routesOrder.length) % this.routesOrder.length;
+        this.navigate(this.routesOrder[prevIdx]);
+      },
+
+      nextSection() {
+        const idx = this.routesOrder.indexOf(this.currentRoute);
+        const nextIdx = (idx + 1) % this.routesOrder.length;
+        this.navigate(this.routesOrder[nextIdx]);
+      },
+
+      renderPage() {
+        const container = document.getElementById('page-container');
+        if (!container) return;
+        container.innerHTML = '';
+        const wrapper = document.createElement('div');
+        wrapper.className = 'animate-page';
+
+        switch (this.currentRoute) {
+          case 'home': wrapper.innerHTML = this.viewHome(); break;
+          case 'materi': wrapper.innerHTML = this.viewMateri(); break;
+          case 'simulasi':
+            wrapper.innerHTML = this.viewSimulasi();
+            setTimeout(() => this.runSimulation(false), 10);
+            break;
+          case 'praktikum':
+            wrapper.innerHTML = this.viewPraktikum();
+            break;
+          case 'game':
+            wrapper.innerHTML = this.viewGame();
+            break;
+          case 'lkpd':
+            wrapper.innerHTML = this.viewLKPD();
+            break;
+          case 'evaluasi':
+            wrapper.innerHTML = this.viewEvaluasi();
+            break;
+          case 'pengembang':
+            wrapper.innerHTML = this.viewPengembang();
+            break;
+        }
+        container.appendChild(wrapper);
+      },
+
+      /* =====================================================================
+         HALAMAN MENU UTAMA (7 MENU BERWARNA)
+         ===================================================================== */
+      viewHome() {
+        const menus = [
+          { id: 'materi', no: '1', title: 'MATERI', sub: '9 Submateri A–I Lengkap & Narasi', icon: '📚', btn: 'btn-blue', border: 'border-sky-300', bg: 'from-sky-50 to-blue-100' },
+          { id: 'simulasi', no: '2', title: 'SIMULASI', sub: 'Kalkulator Visual Batang & Lingkaran', icon: '🧮', btn: 'btn-orange', border: 'border-orange-300', bg: 'from-orange-50 to-amber-100' },
+          { id: 'praktikum', no: '3', title: 'PRAKTIKUM', sub: 'Eksperimen Pizza & Kertas Lipat', icon: '🍕', btn: 'btn-yellow', border: 'border-yellow-300', bg: 'from-yellow-50 to-amber-100' },
+          { id: 'game', no: '4', title: 'GAME', sub: '3 Permainan Seru × 3 Level', icon: '🎮', btn: 'btn-green', border: 'border-emerald-300', bg: 'from-emerald-50 to-green-100' },
+          { id: 'lkpd', no: '5', title: 'LKPD', sub: 'Lembar Kerja Interaktif & Cetak', icon: '📝', btn: 'btn-purple', border: 'border-purple-300', bg: 'from-purple-50 to-fuchsia-100' },
+          { id: 'evaluasi', no: '6', title: 'EVALUASI', sub: '15 Soal Pilihan Ganda & Nilai Otomatis', icon: '🏅', btn: 'btn-pink', border: 'border-pink-300', bg: 'from-pink-50 to-rose-100' },
+          { id: 'pengembang', no: '7', title: 'PENGEMBANG', sub: 'Profil Guru Kelas V SDN 3 Kelaten', icon: '👩‍🏫', btn: 'btn-slate', border: 'border-slate-300', bg: 'from-slate-50 to-indigo-100' }
+        ];
+
+        return `
+          <div class="space-y-6">
+            <!-- Banner Sambutan & Tujuan Pembelajaran (Mindful Learning) -->
+            <div class="bg-white/95 rounded-3xl p-5 sm:p-7 border-4 border-sky-300 shadow-lg flex flex-col lg:flex-row items-center justify-between gap-6">
+              <div class="space-y-2 text-center lg:text-left">
+                <span class="inline-block bg-sky-100 text-sky-800 text-xs font-black px-3 py-1 rounded-full uppercase">Peta Petualangan Belajar</span>
+                <h1 class="text-2xl sm:text-3xl font-black text-slate-900">Pilih Pos Misi Penjelajah Pecahan!</h1>
+                <p class="text-slate-600 font-semibold text-sm sm:text-base max-w-2xl">
+                  Ikuti urutan perjalanan dari <b>Materi</b>, coba hitung di <b>Simulasi</b>, lakukan <b>Praktikum Pizza</b>, kumpulkan bintang di <b>Game</b>, kerjakan <b>LKPD</b>, dan raih nilai terbaik di <b>Evaluasi</b>!
+                </p>
+              </div>
+              <div class="flex flex-wrap justify-center gap-2 shrink-0">
+                <button onclick="AudioEngine.speak('Selamat datang di Menu Utama Misi Penjelajah Pecahan. Ada tujuh pos petualangan: Materi, Simulasi, Praktikum, Game, LKPD, Evaluasi, dan Pengembang.')" class="btn-3d btn-yellow px-4 py-3 rounded-2xl font-black text-sm flex items-center gap-2">
+                  <span>🔊</span>
+                  <span>Panduan Suara</span>
+                </button>
+                <button onclick="document.getElementById('tp-modal').classList.toggle('hidden')" class="btn-3d btn-blue px-4 py-3 rounded-2xl font-black text-sm flex items-center gap-2">
+                  <span>🎯</span>
+                  <span>Tujuan Belajar</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Box Tujuan Pembelajaran (Mindful Learning) -->
+            <div id="tp-modal" class="hidden bg-indigo-50 border-3 border-indigo-300 rounded-3xl p-5 shadow-md">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-lg font-black text-indigo-900">🎯 8 Tujuan Pembelajaran (Kurikulum Merdeka Fase C)</h3>
+                <button onclick="document.getElementById('tp-modal').classList.add('hidden')" class="text-xs font-black bg-white px-3 py-1 rounded-xl border">Tutup ✖</button>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm font-bold text-slate-700">
+                <div class="bg-white p-2.5 rounded-xl">1. Menjelaskan pengertian pecahan biasa dan pecahan campuran.</div>
+                <div class="bg-white p-2.5 rounded-xl">2. Menentukan pecahan senilai dengan tepat.</div>
+                <div class="bg-white p-2.5 rounded-xl">3. Menentukan KPK dua bilangan untuk menyamakan penyebut.</div>
+                <div class="bg-white p-2.5 rounded-xl">4. Menjumlahkan pecahan biasa dengan penyebut berbeda.</div>
+                <div class="bg-white p-2.5 rounded-xl">5. Mengurangkan pecahan biasa dengan penyebut berbeda.</div>
+                <div class="bg-white p-2.5 rounded-xl">6. Menjumlahkan pecahan campuran dengan penyebut berbeda.</div>
+                <div class="bg-white p-2.5 rounded-xl">7. Mengurangkan pecahan campuran dengan penyebut berbeda.</div>
+                <div class="bg-white p-2.5 rounded-xl">8. Menyelesaikan masalah sehari-hari berkaitan dengan pecahan.</div>
+              </div>
+            </div>
+
+            <!-- Grid 7 Kartu Menu Utama -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              ${menus.map(m => `
+                <div onclick="App.navigate('${m.id}')" class="cursor-pointer group bg-gradient-to-br ${m.bg} rounded-3xl p-5 border-4 ${m.border} shadow-lg hover:-translate-y-1.5 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-3">
+                      <span class="w-9 h-9 rounded-2xl bg-white font-black text-slate-800 flex items-center justify-center shadow-sm border">${m.no}</span>
+                      <span class="text-4xl group-hover:scale-110 transition-transform">${m.icon}</span>
+                    </div>
+                    <h2 class="text-xl font-black text-slate-900 tracking-wide">${m.title}</h2>
+                    <p class="text-sm font-bold text-slate-600 mt-1">${m.sub}</p>
+                  </div>
+                  <div class="mt-5">
+                    <button class="btn-3d ${m.btn} w-full py-2.5 rounded-2xl font-black text-sm tracking-wide">
+                      BUKA ${m.title} ➡️
+                    </button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      },
+
+      /* =====================================================================
+         MENU 1: MATERI PEMBELAJARAN (SUBMATERI A - I)
+         ===================================================================== */
+      viewMateri() {
+        const m = MATERI_DATA[this.materiIdx];
+        const answered = this.materiQuizAnswered[m.id];
+
+        return `
+          <div class="space-y-5">
+            <!-- Navigasi Tab Submateri A - I -->
+            <div class="bg-white/95 p-3 rounded-3xl border-3 border-sky-200 shadow-md">
+              <div class="flex items-center justify-between mb-2 px-1">
+                <span class="text-xs font-black uppercase text-sky-700">📚 Pilih Submateri (A – I):</span>
+                <span class="text-xs font-bold text-slate-500">Submateri ${this.materiIdx + 1} dari ${MATERI_DATA.length}</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                ${MATERI_DATA.map((item, idx) => `
+                  <button onclick="App.selectMateri(${idx})" class="px-3 py-2 rounded-2xl text-xs sm:text-sm font-black transition-all ${idx === this.materiIdx ? 'bg-sky-600 text-white shadow-md scale-105' : 'bg-slate-100 text-slate-700 hover:bg-sky-100'}">
+                    ${item.id}. ${item.title.split('. ')[1].slice(0, 18)}${item.title.split('. ')[1].length > 18 ? '...' : ''}
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Konten Submateri Aktif -->
+            <div class="bg-white rounded-3xl p-5 sm:p-8 border-4 border-sky-300 shadow-xl space-y-6">
+              <!-- Header Submateri & Tombol Narasi -->
+              <div class="flex flex-wrap items-start justify-between gap-4 border-b-2 border-slate-100 pb-4">
+                <div>
+                  <span class="inline-block bg-amber-100 text-amber-800 border border-amber-300 px-3 py-1 rounded-full text-xs font-black mb-2">✨ ${m.badge}</span>
+                  <h1 class="text-2xl sm:text-3xl font-black text-slate-900">${m.title}</h1>
+                </div>
+                <button onclick="AudioEngine.speak('${m.narasi.replace(/'/g, "\\'")}')" class="btn-3d btn-yellow px-4 py-3 rounded-2xl font-black text-sm flex items-center gap-2 shrink-0">
+                  <span>🔊</span>
+                  <span>Dengarkan Narasi</span>
+                </button>
+              </div>
+
+              <!-- Tujuan Pembelajaran (Mindful Learning) -->
+              <div class="bg-sky-50 border-l-8 border-sky-500 p-4 rounded-2xl">
+                <p class="text-xs font-black uppercase text-sky-700">🎯 Tujuan Pembelajaran (Mindful Learning)</p>
+                <p class="text-sm sm:text-base font-bold text-slate-800 mt-1">${m.tujuan}</p>
+              </div>
+
+              <!-- Penjelasan & Ilustrasi Visual -->
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <div class="lg:col-span-7 space-y-3">
+                  <h3 class="text-lg font-black text-slate-900 flex items-center gap-2"><span>💡</span> Penjelasan Konsep</h3>
+                  <p class="text-slate-700 text-base leading-relaxed font-semibold">${m.penjelasan}</p>
+                </div>
+                <div class="lg:col-span-5">
+                  ${m.visualHTML()}
+                </div>
+              </div>
+
+              <!-- Langkah Pengerjaan -->
+              <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-5 space-y-3">
+                <h3 class="text-lg font-black text-emerald-900 flex items-center gap-2"><span>🪜</span> Langkah Pengerjaan</h3>
+                <ol class="space-y-2">
+                  ${m.langkah.map((step, i) => `
+                    <li class="flex items-start gap-3 bg-white p-3 rounded-xl border border-emerald-100 shadow-sm">
+                      <span class="w-7 h-7 rounded-full bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5">${i + 1}</span>
+                      <span class="text-sm sm:text-base font-semibold text-slate-800">${step}</span>
+                    </li>
+                  `).join('')}
+                </ol>
+              </div>
+
+              <!-- Contoh Soal & Pembahasan -->
+              <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-5 space-y-3">
+                <h3 class="text-lg font-black text-amber-900 flex items-center gap-2"><span>✍️</span> Contoh Soal & Pembahasan</h3>
+                <div class="bg-white p-4 rounded-xl border border-amber-200 space-y-2">
+                  <p class="font-extrabold text-slate-900">Soal: ${m.contohSoal}</p>
+                  <div class="border-t border-dashed border-amber-300 pt-2 text-sm sm:text-base text-slate-700 font-semibold">
+                    <span class="font-black text-emerald-700">Pembahasan:</span><br>${m.pembahasan}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Latihan Singkat Interaktif -->
+              <div class="bg-purple-50 border-2 border-purple-300 rounded-2xl p-5 space-y-3">
+                <h3 class="text-lg font-black text-purple-900 flex items-center gap-2"><span>⚡</span> Latihan Singkat (Cek Pemahamanmu!)</h3>
+                <p class="font-extrabold text-slate-800">${m.quiz.q}</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  ${m.quiz.options.map((opt, idx) => {
+                    let cls = 'bg-white border-purple-200 hover:bg-purple-100 text-slate-800';
+                    if (answered !== undefined) {
+                      if (idx === m.quiz.answer) cls = 'bg-emerald-500 border-emerald-700 text-white';
+                      else if (idx === answered) cls = 'bg-rose-500 border-rose-700 text-white';
+                    }
+                    return `
+                      <button onclick="App.answerMateriQuiz('${m.id}', ${idx})" class="p-3 rounded-2xl border-2 font-black text-left transition-all ${cls}">
+                        ${['A', 'B', 'C', 'D'][idx]}. ${opt}
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
+                ${answered !== undefined ? `
+                  <div class="p-3 rounded-xl font-bold text-sm ${answered === m.quiz.answer ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' : 'bg-rose-100 text-rose-900 border border-rose-300'}">
+                    ${answered === m.quiz.answer ? '🎉 Hebat! Jawabanmu Benar! (+5 Poin) ' : '💪 Jangan takut salah! '} ${m.quiz.explain}
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- Navigasi Antar Submateri -->
+              <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+                <button onclick="App.selectMateri(${Math.max(0, this.materiIdx - 1)})" ${this.materiIdx === 0 ? 'disabled class="opacity-40 px-4 py-2.5 rounded-2xl bg-slate-200 font-black text-sm"' : 'class="btn-3d btn-slate px-4 py-2.5 rounded-2xl font-black text-sm"'}>
+                  ⬅️ Submateri Sebelumnya
+                </button>
+                <button onclick="App.selectMateri(${Math.min(MATERI_DATA.length - 1, this.materiIdx + 1)})" ${this.materiIdx === MATERI_DATA.length - 1 ? 'disabled class="opacity-40 px-4 py-2.5 rounded-2xl bg-slate-200 font-black text-sm"' : 'class="btn-3d btn-blue px-4 py-2.5 rounded-2xl font-black text-sm"'}>
+                  Submateri Berikutnya ➡️
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      selectMateri(idx) {
+        AudioEngine.playClick();
+        this.materiIdx = idx;
+        this.renderPage();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+
+      answerMateriQuiz(id, optIdx) {
+        const m = MATERI_DATA.find(x => x.id === id);
+        if (!m) return;
+        const firstTime = this.materiQuizAnswered[id] === undefined;
+        this.materiQuizAnswered[id] = optIdx;
+        if (optIdx === m.quiz.answer) {
+          AudioEngine.playSuccess();
+          if (firstTime) this.addReward(5, 1);
+          AudioEngine.speak('Hebat sekali! Jawabanmu benar! ' + m.quiz.explain);
+        } else {
+          AudioEngine.playEncourage();
+          AudioEngine.speak('Jangan takut salah, ayo perhatikan pembahasannya: ' + m.quiz.explain);
+        }
+        this.renderPage();
+      },
+
+      /* =====================================================================
+         MENU 2: SIMULASI PECAHAN INTERAKTIF
+         ===================================================================== */
+      viewSimulasi() {
+        const s = this.simState;
+        return `
+          <div class="space-y-6">
+            <div class="bg-white rounded-3xl p-5 sm:p-7 border-4 border-orange-300 shadow-xl space-y-6">
+              <div class="flex flex-wrap items-center justify-between gap-3 border-b-2 border-orange-100 pb-4">
+                <div>
+                  <span class="bg-orange-100 text-orange-800 text-xs font-black px-3 py-1 rounded-full">🧮 Laboratorium Matematika Virtual</span>
+                  <h1 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">Simulator Pecahan Interaktif</h1>
+                  <p class="text-sm font-bold text-slate-600">Pilih pecahan biasa atau campuran, atur pembilang & penyebut, lalu lihat langkah serta ilustrasi visualnya!</p>
+                </div>
+                <button onclick="AudioEngine.speak('Selamat datang di Simulator Pecahan! Masukkan pecahan pertama dan pecahan kedua, pilih tambah atau kurang, lalu tekan tombol Hitung atau Lihat Langkah.')" class="btn-3d btn-yellow px-4 py-2.5 rounded-2xl font-black text-sm">
+                  🔊 Petunjuk Suara
+                </button>
+              </div>
+
+              <!-- Preset Contoh Cepat -->
+              <div class="flex flex-wrap items-center gap-2 bg-amber-50 p-3 rounded-2xl border border-amber-200">
+                <span class="text-xs font-black text-amber-900">⚡ Contoh Cepat:</span>
+                <button onclick="App.setSimPreset('biasa',0,1,2, '+', 'biasa',0,1,3)" class="px-3 py-1 bg-white border border-amber-300 rounded-xl text-xs font-extrabold hover:bg-amber-100">1/2 + 1/3</button>
+                <button onclick="App.setSimPreset('biasa',0,3,4, '-', 'biasa',0,1,2)" class="px-3 py-1 bg-white border border-amber-300 rounded-xl text-xs font-extrabold hover:bg-amber-100">3/4 − 1/2</button>
+                <button onclick="App.setSimPreset('campuran',1,1,2, '+', 'campuran',2,1,3)" class="px-3 py-1 bg-white border border-amber-300 rounded-xl text-xs font-extrabold hover:bg-amber-100">1 1/2 + 2 1/3</button>
+                <button onclick="App.setSimPreset('campuran',3,1,4, '-', 'campuran',1,1,2)" class="px-3 py-1 bg-white border border-amber-300 rounded-xl text-xs font-extrabold hover:bg-amber-100">3 1/4 − 1 1/2 (Pinjam)</button>
+              </div>
+
+              <!-- Form Input Pecahan 1, Operasi, Pecahan 2 -->
+              <div class="grid grid-cols-1 lg:grid-cols-11 gap-4 items-center">
+                <!-- Pecahan Pertama -->
+                <div class="lg:col-span-4 bg-sky-50 border-3 border-sky-300 rounded-3xl p-4 space-y-3">
+                  <div class="flex items-center justify-between">
+                    <span class="font-black text-sky-900">Pecahan Pertama</span>
+                    <select id="sim-type1" onchange="App.syncSimInputs()" class="bg-white border-2 border-sky-300 rounded-xl px-2.5 py-1 text-xs font-black">
+                      <option value="biasa" ${s.type1 === 'biasa' ? 'selected' : ''}>Pecahan Biasa</option>
+                      <option value="campuran" ${s.type1 === 'campuran' ? 'selected' : ''}>Pecahan Campuran</option>
+                    </select>
+                  </div>
+                  <div class="flex items-center justify-center gap-3 pt-1">
+                    <div id="sim-w1-box" class="${s.type1 === 'campuran' ? '' : 'hidden'} flex flex-col items-center">
+                      <label class="text-[11px] font-bold text-slate-500">Bulat</label>
+                      <input id="sim-w1" type="number" min="0" max="20" value="${s.w1}" class="w-16 h-14 text-center text-2xl font-black bg-white border-2 border-sky-400 rounded-2xl" />
+                    </div>
+                    <div class="flex flex-col items-center gap-1.5">
+                      <input id="sim-n1" type="number" min="0" max="50" value="${s.n1}" aria-label="Pembilang 1" class="w-20 h-12 text-center text-xl font-black bg-white border-2 border-sky-400 rounded-xl" />
+                      <div class="w-20 h-1 bg-slate-800 rounded"></div>
+                      <input id="sim-d1" type="number" min="1" max="24" value="${s.d1}" aria-label="Penyebut 1" class="w-20 h-12 text-center text-xl font-black bg-white border-2 border-sky-400 rounded-xl" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Pilihan Operasi -->
+                <div class="lg:col-span-3 flex flex-col items-center justify-center gap-2">
+                  <span class="text-xs font-black uppercase text-slate-500">Pilih Operasi</span>
+                  <div class="flex gap-3">
+                    <button onclick="App.setSimOp('+')" class="w-14 h-14 rounded-2xl text-2xl font-black border-3 transition-all ${s.op === '+' ? 'bg-emerald-500 text-white border-emerald-700 scale-110 shadow-lg' : 'bg-white text-slate-700 border-slate-300'}">+</button>
+                    <button onclick="App.setSimOp('-')" class="w-14 h-14 rounded-2xl text-2xl font-black border-3 transition-all ${s.op === '-' ? 'bg-rose-500 text-white border-rose-700 scale-110 shadow-lg' : 'bg-white text-slate-700 border-slate-300'}">−</button>
+                  </div>
+                </div>
+
+                <!-- Pecahan Kedua -->
+                <div class="lg:col-span-4 bg-purple-50 border-3 border-purple-300 rounded-3xl p-4 space-y-3">
+                  <div class="flex items-center justify-between">
+                    <span class="font-black text-purple-900">Pecahan Kedua</span>
+                    <select id="sim-type2" onchange="App.syncSimInputs()" class="bg-white border-2 border-purple-300 rounded-xl px-2.5 py-1 text-xs font-black">
+                      <option value="biasa" ${s.type2 === 'biasa' ? 'selected' : ''}>Pecahan Biasa</option>
+                      <option value="campuran" ${s.type2 === 'campuran' ? 'selected' : ''}>Pecahan Campuran</option>
+                    </select>
+                  </div>
+                  <div class="flex items-center justify-center gap-3 pt-1">
+                    <div id="sim-w2-box" class="${s.type2 === 'campuran' ? '' : 'hidden'} flex flex-col items-center">
+                      <label class="text-[11px] font-bold text-slate-500">Bulat</label>
+                      <input id="sim-w2" type="number" min="0" max="20" value="${s.w2}" class="w-16 h-14 text-center text-2xl font-black bg-white border-2 border-purple-400 rounded-2xl" />
+                    </div>
+                    <div class="flex flex-col items-center gap-1.5">
+                      <input id="sim-n2" type="number" min="0" max="50" value="${s.n2}" aria-label="Pembilang 2" class="w-20 h-12 text-center text-xl font-black bg-white border-2 border-purple-400 rounded-xl" />
+                      <div class="w-20 h-1 bg-slate-800 rounded"></div>
+                      <input id="sim-d2" type="number" min="1" max="24" value="${s.d2}" aria-label="Penyebut 2" class="w-20 h-12 text-center text-xl font-black bg-white border-2 border-purple-400 rounded-xl" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tombol Aksi Hitung & Lihat Langkah -->
+              <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="App.runSimulation(false)" class="btn-3d btn-green px-7 py-3.5 rounded-2xl font-black text-base sm:text-lg flex items-center gap-2">
+                  <span>🚀</span>
+                  <span>HITUNG LANGSUNG</span>
+                </button>
+                <button onclick="App.runSimulation(true)" class="btn-3d btn-blue px-7 py-3.5 rounded-2xl font-black text-base sm:text-lg flex items-center gap-2">
+                  <span>🪜</span>
+                  <span>LIHAT LANGKAH BERTAHAP</span>
+                </button>
+              </div>
+
+              <!-- Area Hasil Perhitungan & Visualisasi SVG -->
+              <div id="sim-output" class="space-y-5"></div>
+            </div>
+          </div>
+        `;
+      },
+
+      setSimPreset(t1, w1, n1, d1, op, t2, w2, n2, d2) {
+        AudioEngine.playClick();
+        this.simState = { ...this.simState, type1: t1, w1, n1, d1, op, type2: t2, w2, n2, d2 };
+        this.renderPage();
+      },
+
+      setSimOp(op) {
+        AudioEngine.playClick();
+        this.simState.op = op;
+        this.syncSimInputs(false);
+        this.renderPage();
+      },
+
+      syncSimInputs(rerender = true) {
+        const t1 = document.getElementById('sim-type1');
+        const t2 = document.getElementById('sim-type2');
+        const w1 = document.getElementById('sim-w1');
+        const n1 = document.getElementById('sim-n1');
+        const d1 = document.getElementById('sim-d1');
+        const w2 = document.getElementById('sim-w2');
+        const n2 = document.getElementById('sim-n2');
+        const d2 = document.getElementById('sim-d2');
+        if (t1) this.simState.type1 = t1.value;
+        if (t2) this.simState.type2 = t2.value;
+        if (w1) this.simState.w1 = Math.max(0, parseInt(w1.value, 10) || 0);
+        if (n1) this.simState.n1 = Math.max(0, parseInt(n1.value, 10) || 0);
+        if (d1) this.simState.d1 = Math.max(1, parseInt(d1.value, 10) || 1);
+        if (w2) this.simState.w2 = Math.max(0, parseInt(w2.value, 10) || 0);
+        if (n2) this.simState.n2 = Math.max(0, parseInt(n2.value, 10) || 0);
+        if (d2) this.simState.d2 = Math.max(1, parseInt(d2.value, 10) || 1);
+        if (rerender) this.renderPage();
+      },
+
+      runSimulation(stepByStep = false) {
+        AudioEngine.playClick();
+        this.syncSimInputs(false);
+        const s = this.simState;
+        const w1 = s.type1 === 'campuran' ? s.w1 : 0;
+        const w2 = s.type2 === 'campuran' ? s.w2 : 0;
+        const n1 = s.n1, d1 = s.d1;
+        const n2 = s.n2, d2 = s.d2;
+
+        if (d1 <= 0 || d2 <= 0) {
+          this.showToast('Penyebut tidak boleh 0!', 'warn');
+          return;
+        }
+
+        // Ubah ke pecahan biasa
+        const imp1 = MathFrac.toImproper(w1, n1, d1);
+        const imp2 = MathFrac.toImproper(w2, n2, d2);
+        const kpk = MathFrac.lcm(d1, d2);
+        const mul1 = kpk / d1;
+        const mul2 = kpk / d2;
+        const eqN1 = imp1.num * mul1;
+        const eqN2 = imp2.num * mul2;
+
+        const rawResNum = s.op === '+' ? (eqN1 + eqN2) : (eqN1 - eqN2);
+        if (rawResNum < 0) {
+          const out = document.getElementById('sim-output');
+          if (out) {
+            out.innerHTML = `
+              <div class="bg-rose-50 border-2 border-rose-300 p-4 rounded-2xl text-rose-900 font-bold">
+                ⚠️ Pecahan pertama lebih kecil daripada pecahan kedua sehingga hasilnya negatif. Di kelas 5 SD, pastikan pecahan pertama lebih besar atau sama dengan pecahan kedua ya!
+              </div>
+            `;
+          }
+          return;
+        }
+
+        const simp = MathFrac.simplify(rawResNum, kpk);
+        const mixed = MathFrac.toMixed(simp.num, simp.den);
+
+        // Deteksi teknik meminjam pada pengurangan pecahan campuran
+        const eqFracOnly1 = n1 * mul1;
+        const eqFracOnly2 = n2 * mul2;
+        const needsBorrowing = (s.op === '-' && (w1 > 0 || w2 > 0) && eqFracOnly1 < eqFracOnly2);
+
+        const soalHTML = `${MathFrac.htmlMixed(w1, n1, d1, 'text-sky-700')} <span class="mx-2 text-2xl">${s.op === '+' ? '+' : '−'}</span> ${MathFrac.htmlMixed(w2, n2, d2, 'text-purple-700')}`;
+        const finalHTML = mixed.whole > 0
+          ? (mixed.num > 0 ? MathFrac.htmlMixed(mixed.whole, mixed.num, mixed.den, 'text-emerald-700') : `<span class="text-3xl font-black text-emerald-700">${mixed.whole}</span>`)
+          : MathFrac.htmlFrac(simp.num, simp.den, 'text-emerald-700');
+
+        const steps = [
+          {
+            title: '1. Soal yang Dipilih',
+            body: `<div class="text-xl font-black">${soalHTML}</div>`
+          },
+          {
+            title: '2. Menentukan KPK Penyebut',
+            body: `Penyebutnya adalah <b>${d1}</b> dan <b>${d2}</b>. KPK dari ${d1} dan ${d2} adalah <span class="bg-yellow-200 px-2.5 py-0.5 rounded-lg font-black">${kpk}</span>.`
+          },
+          {
+            title: '3. Mengubah & Menyamakan Penyebut',
+            body: `
+              ${(w1 > 0 || w2 > 0) ? `<p class="mb-1">Ubah ke pecahan biasa: ${MathFrac.htmlFrac(imp1.num, d1)} ${s.op} ${MathFrac.htmlFrac(imp2.num, d2)}</p>` : ''}
+              <p>Samakan penyebut menjadi <b>${kpk}</b>: ${MathFrac.htmlFrac(eqN1, kpk, 'text-sky-700')} ${s.op} ${MathFrac.htmlFrac(eqN2, kpk, 'text-purple-700')}</p>
+              ${needsBorrowing ? `<p class="mt-2 bg-indigo-50 border border-indigo-200 p-2.5 rounded-xl text-xs sm:text-sm text-indigo-900">💡 <b>Info Teknik Meminjam:</b> Jika dikerjakan secara terpisah (${w1} ${eqFracOnly1}/${kpk} − ${w2} ${eqFracOnly2}/${kpk}), karena ${eqFracOnly1}/${kpk} &lt; ${eqFracOnly2}/${kpk}, kita meminjam 1 utuh (= ${kpk}/${kpk}) dari ${w1} menjadi <b>${w1 - 1} ${eqFracOnly1 + kpk}/${kpk}</b>!</p>` : ''}
+            `
+          },
+          {
+            title: `4. Proses ${s.op === '+' ? 'Penjumlahan' : 'Pengurangan'} Pembilang`,
+            body: `${MathFrac.htmlFrac(`${eqN1} ${s.op} ${eqN2}`, kpk)} = ${MathFrac.htmlFrac(rawResNum, kpk, 'text-orange-700')}`
+          },
+          {
+            title: '5. Penyederhanaan & Bentuk Akhir',
+            body: `
+              <p>Bentuk pecahan biasa: ${MathFrac.htmlFrac(rawResNum, kpk)} ${simp.factor > 1 ? `➡️ Disederhanakan (÷${simp.factor}): ${MathFrac.htmlFrac(simp.num, simp.den)}` : '(sudah paling sederhana)'}</p>
+              ${simp.num > simp.den ? `<p class="mt-1">Diubah menjadi pecahan campuran: ${simp.num} ÷ ${simp.den} = <b>${mixed.whole}</b> sisa <b>${mixed.num}</b> ➡️ ${finalHTML}</p>` : ''}
+            `
+          }
+        ];
+
+        if (stepByStep) {
+          if (!s.stepMode) {
+            s.stepMode = true;
+            s.revealedSteps = 1;
+          } else {
+            s.revealedSteps = Math.min(steps.length, s.revealedSteps + 1);
+          }
+        } else {
+          s.stepMode = false;
+          s.revealedSteps = steps.length;
+        }
+
+        // Visualisasi Batang & Lingkaran Pecahan
+        const visualBox = `
+          <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 space-y-3">
+            <h4 class="font-black text-slate-800 text-sm uppercase">📊 Visualisasi Batang & Lingkaran Pecahan (Penyebut ${kpk})</h4>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center text-center">
+              <div class="bg-white p-3 rounded-2xl border">
+                <p class="text-xs font-black text-sky-700 mb-2">Pecahan 1 (${Math.min(eqN1, kpk)}/${kpk}${eqN1 > kpk ? ' +' : ''})</p>
+                ${MathFrac.svgBar(Math.min(eqN1, kpk), kpk, '#38bdf8')}
+                <div class="mt-2">${MathFrac.svgCircle(Math.min(eqN1, kpk), kpk, '#38bdf8')}</div>
+              </div>
+              <div class="bg-white p-3 rounded-2xl border">
+                <p class="text-xs font-black text-purple-700 mb-2">Pecahan 2 (${Math.min(eqN2, kpk)}/${kpk}${eqN2 > kpk ? ' +' : ''})</p>
+                ${MathFrac.svgBar(Math.min(eqN2, kpk), kpk, '#c084fc')}
+                <div class="mt-2">${MathFrac.svgCircle(Math.min(eqN2, kpk), kpk, '#c084fc')}</div>
+              </div>
+              <div class="bg-emerald-50 p-3 rounded-2xl border-2 border-emerald-400">
+                <p class="text-xs font-black text-emerald-800 mb-2">Hasil Akhir (${simp.num}/${simp.den})</p>
+                ${MathFrac.svgBar(mixed.whole > 0 && mixed.num === 0 ? simp.den : (mixed.num || simp.num), simp.den, '#22c55e')}
+                <div class="mt-2">${MathFrac.svgCircle(mixed.whole > 0 && mixed.num === 0 ? simp.den : (mixed.num || simp.num), simp.den, '#22c55e')}</div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        const out = document.getElementById('sim-output');
+        if (out) {
+          out.innerHTML = `
+            <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border-3 border-emerald-400 rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <p class="text-xs font-black uppercase text-emerald-700">✨ Hasil Akhir Perhitungan</p>
+                <div class="text-2xl sm:text-3xl font-black text-slate-900 mt-1 flex items-center gap-3">
+                  <span>${soalHTML}</span>
+                  <span>=</span>
+                  <span class="bg-white px-4 py-1.5 rounded-2xl border-2 border-emerald-500 shadow-sm">${finalHTML}</span>
+                </div>
+              </div>
+              <button onclick="AudioEngine.speak('Hasil dari perhitungan tersebut adalah ${mixed.whole > 0 ? mixed.whole + ' ' : ''}${mixed.num > 0 ? mixed.num + ' per ' + mixed.den : ''}')" class="btn-3d btn-yellow px-4 py-2.5 rounded-2xl font-black text-xs sm:text-sm">
+                🔊 Bacakan Hasil
+              </button>
+            </div>
+
+            <div class="space-y-2.5">
+              ${steps.slice(0, s.revealedSteps).map(st => `
+                <div class="bg-white border-2 border-slate-200 p-4 rounded-2xl shadow-sm">
+                  <p class="text-xs font-black uppercase text-orange-600 mb-1">${st.title}</p>
+                  <div class="text-sm sm:text-base font-bold text-slate-800">${st.body}</div>
+                </div>
+              `).join('')}
+              ${s.stepMode && s.revealedSteps < steps.length ? `
+                <button onclick="App.runSimulation(true)" class="btn-3d btn-blue w-full py-3 rounded-2xl font-black text-sm">
+                  👇 Tampilkan Langkah Berikutnya (${s.revealedSteps}/${steps.length})
+                </button>
+              ` : ''}
+            </div>
+
+            ${visualBox}
+          `;
+        }
+      },
+
+      /* =====================================================================
+         MENU 3: PRAKTIKUM EKSPERIMEN PIZZA PECAHAN
+         ===================================================================== */
+      viewPraktikum() {
+        const exp = PRAKTIKUM_DATA[this.prakIdx];
+        if (this.prakSlices.length !== exp.totalSlices) {
+          this.initPraktikumSlices();
+        }
+
+        // Hitung potongan aktif
+        const countA = this.prakSlices.filter(x => x === 1).length;
+        const countB = this.prakSlices.filter(x => x === 2).length;
+        const totalSelected = countA + countB;
+
+        // Gambar SVG Pizza Interaktif yang Dapat Diklik
+        const cx = 120, cy = 120, r = 104;
+        let slicePaths = '';
+        for (let i = 0; i < exp.totalSlices; i++) {
+          const a1 = (i * 2 * Math.PI) / exp.totalSlices - Math.PI / 2;
+          const a2 = ((i + 1) * 2 * Math.PI) / exp.totalSlices - Math.PI / 2;
+          const x1 = cx + r * Math.cos(a1);
+          const y1 = cy + r * Math.sin(a1);
+          const x2 = cx + r * Math.cos(a2);
+          const y2 = cy + r * Math.sin(a2);
+          const largeArc = (a2 - a1) > Math.PI ? 1 : 0;
+          const st = this.prakSlices[i];
+          const fill = st === 1 ? '#38bdf8' : (st === 2 ? '#fb923c' : '#fef3c7');
+          // Pepperoni hiasan di tengah slice
+          const midA = (a1 + a2) / 2;
+          const px = cx + (r * 0.62) * Math.cos(midA);
+          const py = cy + (r * 0.62) * Math.sin(midA);
+
+          slicePaths += `
+            <g class="pizza-slice" onclick="App.togglePizzaSlice(${i})">
+              <path d="M${cx},${cy} L${x1.toFixed(1)},${y1.toFixed(1)} A${r},${r} 0 ${largeArc},1 ${x2.toFixed(1)},${y2.toFixed(1)} Z"
+                    fill="${fill}" stroke="#9a3412" stroke-width="3.5" />
+              <circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="8" fill="${st > 0 ? '#ffffff' : '#ef4444'}" opacity="0.75"/>
+              <text x="${px.toFixed(1)}" y="${(py + 4).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="900" fill="#1e293b">${i + 1}</text>
+            </g>
+          `;
+        }
+
+        return `
+          <div class="space-y-6">
+            <div class="bg-white rounded-3xl p-5 sm:p-7 border-4 border-yellow-400 shadow-xl space-y-6">
+              <div class="flex flex-wrap items-center justify-between gap-3 border-b-2 border-yellow-100 pb-4">
+                <div>
+                  <span class="bg-yellow-100 text-amber-800 text-xs font-black px-3 py-1 rounded-full">🍕 Laboratorium Konkret</span>
+                  <h1 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">EKSPERIMEN PIZZA PECAHAN</h1>
+                </div>
+                <button onclick="AudioEngine.speak('${exp.title}. ${exp.desc.replace(/<[^>]+>/g, '')}')" class="btn-3d btn-yellow px-4 py-2.5 rounded-2xl font-black text-sm">
+                  🔊 Dengarkan Instruksi
+                </button>
+              </div>
+
+              <!-- 4 Tab Eksperimen -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+                ${PRAKTIKUM_DATA.map((p, idx) => `
+                  <button onclick="App.selectPraktikum(${idx})" class="p-3 rounded-2xl text-left border-2 font-black text-xs sm:text-sm transition-all ${idx === this.prakIdx ? 'bg-orange-500 text-white border-orange-700 shadow-md' : 'bg-amber-50 text-slate-800 border-amber-200 hover:bg-amber-100'}">
+                    ${p.title}
+                  </button>
+                `).join('')}
+              </div>
+
+              <!-- Area Eksperimen Aktif -->
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-amber-50/70 p-5 rounded-3xl border-2 border-amber-200">
+                <!-- Pizza Interaktif -->
+                <div class="lg:col-span-5 flex flex-col items-center space-y-3">
+                  ${exp.wholeBase ? `
+                    <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-2xl border-2 border-orange-300">
+                      <span class="text-sm font-black text-orange-800">Pizza Utuh Tersedia:</span>
+                      <span class="text-xl">${'🍕'.repeat(exp.wholeBase)} (${exp.wholeBase} Utuh)</span>
+                    </div>
+                  ` : ''}
+                  <svg viewBox="0 0 240 240" class="w-60 h-60 drop-shadow-xl">
+                    <circle cx="120" cy="120" r="113" fill="#d97706" stroke="#78350f" stroke-width="4"/>
+                    ${slicePaths}
+                  </svg>
+                  <div class="flex flex-wrap justify-center gap-2 text-xs font-extrabold">
+                    <span class="px-2.5 py-1 rounded-lg bg-sky-200 text-sky-900">Biru: Pecahan 1 (${countA}/${exp.totalSlices})</span>
+                    ${exp.mode === 'add' ? `<span class="px-2.5 py-1 rounded-lg bg-orange-200 text-orange-900">Oranye: Pecahan 2 (${countB}/${exp.totalSlices})</span>` : ''}
+                    <button onclick="App.initPraktikumSlices(); App.renderPage();" class="px-2.5 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800">🔄 Reset Pizza</button>
+                  </div>
+                </div>
+
+                <!-- Petunjuk & Pertanyaan Pengamatan -->
+                <div class="lg:col-span-7 space-y-4">
+                  <div class="bg-white p-4 rounded-2xl border-2 border-amber-300 space-y-2">
+                    <h3 class="font-black text-lg text-orange-700">${exp.title}</h3>
+                    <p class="text-sm sm:text-base font-semibold text-slate-700 leading-relaxed">${exp.desc}</p>
+                    <div class="bg-emerald-50 border border-emerald-300 px-4 py-2 rounded-xl font-black text-emerald-900 text-sm">
+                      📊 Hasil Percobaan Pizza Saat Ini: ${exp.wholeBase ? `${exp.wholeBase} utuh + ` : ''}${totalSelected}/${exp.totalSlices} bagian terpilih.
+                    </div>
+                  </div>
+
+                  <div class="bg-white p-4 rounded-2xl border-2 border-sky-300 space-y-3">
+                    <p class="font-black text-slate-900 text-sm sm:text-base">🔍 Pertanyaan Pengamatan: ${exp.question}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label class="text-xs font-black text-slate-600">Jawaban Pecahan Hasil Akhir:</label>
+                        <input id="prak-ans-input" type="text" placeholder="Contoh: 5/6 atau 3 5/6" class="w-full mt-1 px-3 py-2 rounded-xl border-2 border-slate-300 font-black text-slate-900" />
+                      </div>
+                      <div>
+                        <label class="text-xs font-black text-slate-600">Kesimpulan Pengamatanmu:</label>
+                        <input id="prak-conc-input" type="text" placeholder="Tulis kesimpulan singkatmu..." class="w-full mt-1 px-3 py-2 rounded-xl border-2 border-slate-300 font-bold text-slate-800" />
+                      </div>
+                    </div>
+                    <button onclick="App.checkPraktikum()" class="btn-3d btn-green px-5 py-2.5 rounded-2xl font-black text-sm">
+                      ✅ Periksa Eksperimen
+                    </button>
+                    <div id="prak-feedback"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Panduan Praktikum Kertas Lipat di Kelas -->
+              <div class="bg-indigo-50 border-3 border-indigo-300 rounded-3xl p-5 space-y-3">
+                <h3 class="text-lg font-black text-indigo-900 flex items-center gap-2"><span>📄</span> Panduan Praktikum Konkret di Kelas: Kertas Lipat Pecahan (1/2 + 1/3)</h3>
+                <p class="text-sm font-semibold text-slate-700">Guru dan siswa dapat mempraktikkan langsung di meja kelas menggunakan 1 lembar kertas origami atau kertas HVS:</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs sm:text-sm font-bold">
+                  <div class="bg-white p-3.5 rounded-2xl border border-indigo-200">
+                    <span class="font-black text-indigo-700 block mb-1">Langkah 1 (Lipat 1/2):</span>
+                    Lipat kertas secara vertikal menjadi 2 bagian sama besar. Arsir 1 bagian dengan pensil warna biru (= 1/2).
+                  </div>
+                  <div class="bg-white p-3.5 rounded-2xl border border-indigo-200">
+                    <span class="font-black text-indigo-700 block mb-1">Langkah 2 (Lipat 1/3):</span>
+                    Buka lipatan, lalu lipat kertas secara horizontal menjadi 3 bagian sama besar. Terbentuk 6 kotak kecil!
+                  </div>
+                  <div class="bg-white p-3.5 rounded-2xl border border-indigo-200">
+                    <span class="font-black text-indigo-700 block mb-1">Langkah 3 (Arsir 1/3):</span>
+                    1/3 bagian sama dengan 2 kotak kosong. Arsir 2 kotak kosong tersebut dengan warna kuning (= 2/6).
+                  </div>
+                  <div class="bg-white p-3.5 rounded-2xl border border-indigo-200">
+                    <span class="font-black text-emerald-700 block mb-1">Langkah 4 (Kesimpulan):</span>
+                    Hitung seluruh kotak yang terarsir biru dan kuning: ada 5 dari 6 kotak = <b>5/6</b>!
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      initPraktikumSlices() {
+        const exp = PRAKTIKUM_DATA[this.prakIdx];
+        this.prakSlices = Array(exp.totalSlices).fill(0);
+        if (exp.mode === 'sub' && exp.initialSelected) {
+          for (let i = 0; i < exp.initialSelected; i++) {
+            this.prakSlices[i] = 1;
+          }
+        }
+      },
+
+      selectPraktikum(idx) {
+        AudioEngine.playClick();
+        this.prakIdx = idx;
+        this.initPraktikumSlices();
+        this.renderPage();
+      },
+
+      togglePizzaSlice(sliceIndex) {
+        AudioEngine.playClick();
+        const exp = PRAKTIKUM_DATA[this.prakIdx];
+        if (exp.mode === 'add') {
+          // Siklus: 0 (kosong) -> 1 (biru / pecahan 1) -> 2 (oranye / pecahan 2) -> 0
+          this.prakSlices[sliceIndex] = (this.prakSlices[sliceIndex] + 1) % 3;
+        } else {
+          // Mode pengurangan: toggle 1 <-> 0
+          this.prakSlices[sliceIndex] = this.prakSlices[sliceIndex] === 1 ? 0 : 1;
+        }
+        this.renderPage();
+      },
+
+      checkPraktikum() {
+        const exp = PRAKTIKUM_DATA[this.prakIdx];
+        const ansRaw = (document.getElementById('prak-ans-input')?.value || '').trim().replace(/\s+/g, ' ');
+        const fb = document.getElementById('prak-feedback');
+        if (!fb) return;
+
+        const totalSelected = this.prakSlices.filter(x => x > 0).length;
+        const targetCount = exp.mode === 'add' ? (exp.targetA + exp.targetB) : exp.targetRemaining;
+        const sliceCorrect = totalSelected === targetCount;
+        const textCorrect = ansRaw === exp.expectedFraction;
+
+        if (sliceCorrect && textCorrect) {
+          AudioEngine.playSuccess();
+          this.addReward(15, 2);
+          AudioEngine.speak('Luar biasa! Eksperimen pizzamu tepat sekali! ' + exp.conclusionHint);
+          fb.innerHTML = `<div class="p-3 rounded-xl bg-emerald-100 border border-emerald-400 text-emerald-900 font-bold text-sm">🎉 Tepat Sekali! (+15 Poin & 2 Bintang) ${exp.conclusionHint}</div>`;
+        } else {
+          AudioEngine.playEncourage();
+          AudioEngine.speak('Ayo cek lagi potongan pizza dan jawaban pecahanmu. Kamu pasti bisa!');
+          fb.innerHTML = `<div class="p-3 rounded-xl bg-amber-100 border border-amber-400 text-amber-900 font-bold text-sm">💡 Petunjuk: Pastikan potongan pizza terpilih berjumlah <b>${targetCount}/${exp.totalSlices}</b> dan tuliskan hasil akhir <b>${exp.expectedFraction}</b>. ${exp.conclusionHint}</div>`;
+        }
+      },
+
+      /* =====================================================================
+         MENU 4: GAME EDUKATIF (3 GAME × 3 LEVEL)
+         ===================================================================== */
+      viewGame() {
+        if (this.g2Order.length === 0) {
+          this.resetGame2Order();
+        }
+        return `
+          <div class="space-y-6">
+            <div class="bg-white rounded-3xl p-5 sm:p-7 border-4 border-emerald-400 shadow-xl space-y-6">
+              <!-- Header Game -->
+              <div class="flex flex-wrap items-center justify-between gap-3 border-b-2 border-emerald-100 pb-4">
+                <div>
+                  <span class="bg-emerald-100 text-emerald-800 text-xs font-black px-3 py-1 rounded-full">🎮 Joyful Learning Arena</span>
+                  <h1 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">Arena Permainan Penjelajah Pecahan</h1>
+                </div>
+                <!-- Pemilih Level -->
+                <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-2xl">
+                  ${[1, 2, 3].map(lvl => `
+                    <button onclick="App.setGameLevel(${lvl})" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black transition-all ${this.gameLevel === lvl ? 'bg-amber-400 text-slate-900 shadow' : 'text-slate-600 hover:bg-white'}">
+                      ${lvl === 1 ? '⭐ Level 1: Mudah' : lvl === 2 ? '⭐⭐ Level 2: Sedang' : '⭐⭐⭐ Level 3: Sulit'}
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+
+              <!-- Pilihan 3 Jenis Game -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <button onclick="App.setGameTab(1)" class="p-4 rounded-2xl border-3 text-left transition-all ${this.gameTab === 1 ? 'bg-sky-500 text-white border-sky-700 shadow-lg' : 'bg-sky-50 text-slate-800 border-sky-200'}">
+                  <span class="text-2xl">🎯</span>
+                  <p class="font-black text-base mt-1">GAME 1: TEBAK HASIL PECAHAN</p>
+                  <p class="text-xs opacity-90 font-bold">Pilih jawaban tepat dari 4 opsi!</p>
+                </button>
+                <button onclick="App.setGameTab(2)" class="p-4 rounded-2xl border-3 text-left transition-all ${this.gameTab === 2 ? 'bg-purple-600 text-white border-purple-800 shadow-lg' : 'bg-purple-50 text-slate-800 border-purple-200'}">
+                  <span class="text-2xl">🧩</span>
+                  <p class="font-black text-base mt-1">GAME 2: SUSUN LANGKAH PECAHAN</p>
+                  <p class="text-xs opacity-90 font-bold">Urutkan kartu langkah penyelesaian!</p>
+                </button>
+                <button onclick="App.setGameTab(3)" class="p-4 rounded-2xl border-3 text-left transition-all ${this.gameTab === 3 ? 'bg-orange-500 text-white border-orange-700 shadow-lg' : 'bg-orange-50 text-slate-800 border-orange-200'}">
+                  <span class="text-2xl">🏴‍☠️</span>
+                  <p class="font-black text-base mt-1">GAME 3: BERBURU HARTA KARUN</p>
+                  <p class="text-xs opacity-90 font-bold">Buka peti harta karun dengan pecahan!</p>
+                </button>
+              </div>
+
+              <!-- Konten Game Aktif -->
+              <div id="game-arena" class="bg-slate-50 border-2 border-slate-200 rounded-3xl p-5 sm:p-6">
+                ${this.gameTab === 1 ? this.renderGame1() : this.gameTab === 2 ? this.renderGame2() : this.renderGame3()}
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      setGameTab(tab) {
+        AudioEngine.playClick();
+        this.gameTab = tab;
+        if (tab === 2) this.resetGame2Order();
+        this.renderPage();
+      },
+
+      setGameLevel(lvl) {
+        AudioEngine.playClick();
+        this.gameLevel = lvl;
+        this.g1Index = 0;
+        this.g3Index = 0;
+        this.resetGame2Order();
+        this.renderPage();
+      },
+
+      // --- GAME 1: TEBAK HASIL PECAHAN ---
+      renderGame1() {
+        const list = GAME1_QUESTIONS[this.gameLevel];
+        if (this.g1Index >= list.length) {
+          return `
+            <div class="text-center py-6 space-y-4">
+              <div class="text-6xl animate-bounce">🏆🎉</div>
+              <h3 class="text-2xl font-black text-emerald-700">Selamat! Kamu Menaklukkan Level ${this.gameLevel}!</h3>
+              <p class="font-bold text-slate-700">"Kamu hebat karena terus mencoba!" Ayo lanjutkan ke level berikutnya atau coba game lainnya!</p>
+              <div class="flex flex-wrap justify-center gap-3">
+                ${this.gameLevel < 3 ? `<button onclick="App.setGameLevel(${this.gameLevel + 1})" class="btn-3d btn-green px-6 py-3 rounded-2xl font-black">Naik ke Level ${this.gameLevel + 1} 🚀</button>` : ''}
+                <button onclick="App.g1Index = 0; App.renderPage();" class="btn-3d btn-blue px-6 py-3 rounded-2xl font-black">Main Lagi 🔄</button>
+              </div>
+            </div>
+          `;
+        }
+        const item = list[this.g1Index];
+        return `
+          <div class="space-y-5 max-w-2xl mx-auto text-center">
+            <div class="flex items-center justify-between text-xs font-black text-slate-500">
+              <span>Soal ${this.g1Index + 1} dari ${list.length}</span>
+              <span class="bg-yellow-200 text-amber-900 px-3 py-1 rounded-full">+10 Poin setiap benar</span>
+            </div>
+            <div class="bg-white p-6 rounded-3xl border-3 border-sky-300 shadow">
+              <p class="text-3xl sm:text-4xl font-black text-slate-900">${item.q}</p>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              ${item.opts.map((opt, idx) => `
+                <button onclick="App.checkGame1(${idx})" class="btn-3d btn-blue py-4 rounded-2xl text-xl font-black">
+                  ${['A', 'B', 'C', 'D'][idx]}. ${opt}
+                </button>
+              `).join('')}
+            </div>
+            <div id="g1-feedback"></div>
+          </div>
+        `;
+      },
+
+      checkGame1(optIdx) {
+        const list = GAME1_QUESTIONS[this.gameLevel];
+        const item = list[this.g1Index];
+        const fb = document.getElementById('g1-feedback');
+        if (optIdx === item.ans) {
+          AudioEngine.playSuccess();
+          this.addReward(10, 1);
+          AudioEngine.speak('Benar sekali! Kamu mendapat sepuluh poin dan satu bintang!');
+          this.showToast('🎉 Benar! +10 Poin & +1 Bintang!', 'success');
+          this.g1Index++;
+          this.renderPage();
+        } else {
+          AudioEngine.playEncourage();
+          AudioEngine.speak('Jangan takut salah! Perhatikan petunjuk ini: ' + item.hint);
+          if (fb) {
+            fb.innerHTML = `<div class="p-3 rounded-2xl bg-amber-100 border-2 border-amber-400 text-amber-900 font-bold text-sm">💡 Petunjuk: ${item.hint}</div>`;
+          }
+        }
+      },
+
+      // --- GAME 2: SUSUN LANGKAH PECAHAN ---
+      resetGame2Order() {
+        const steps = GAME2_STEPS[this.gameLevel].steps;
+        const indexed = steps.map((text, idx) => ({ text, correctIdx: idx }));
+        // Acak urutan awal
+        this.g2Order = [...indexed].sort(() => Math.random() - 0.5);
+        if (this.g2Order.every((item, idx) => item.correctIdx === idx)) {
+          this.g2Order.reverse();
+        }
+      },
+
+      renderGame2() {
+        const data = GAME2_STEPS[this.gameLevel];
+        return `
+          <div class="space-y-4 max-w-3xl mx-auto">
+            <div class="bg-white p-4 rounded-2xl border-2 border-purple-300 text-center">
+              <p class="text-xs font-black uppercase text-purple-600">Level ${this.gameLevel}</p>
+              <p class="text-lg font-black text-slate-900 mt-1">${data.soal}</p>
+              <p class="text-xs font-bold text-slate-500 mt-1">Gunakan tombol ⬆️ atau ⬇️ untuk mengurutkan langkah dari nomor 1 sampai selesai!</p>
+            </div>
+
+            <div class="space-y-2.5">
+              ${this.g2Order.map((item, idx) => `
+                <div class="bg-white p-3.5 rounded-2xl border-2 border-purple-200 shadow-sm flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-xl bg-purple-600 text-white font-black flex items-center justify-center shrink-0">${idx + 1}</span>
+                    <span class="text-sm sm:text-base font-bold text-slate-800">${item.text}</span>
+                  </div>
+                  <div class="flex gap-1.5 shrink-0">
+                    <button onclick="App.moveGame2(${idx}, -1)" ${idx === 0 ? 'disabled class="opacity-30 px-2.5 py-1.5 bg-slate-200 rounded-xl font-black"' : 'class="btn-3d btn-yellow px-2.5 py-1.5 rounded-xl font-black"'}>⬆️</button>
+                    <button onclick="App.moveGame2(${idx}, 1)" ${idx === this.g2Order.length - 1 ? 'disabled class="opacity-30 px-2.5 py-1.5 bg-slate-200 rounded-xl font-black"' : 'class="btn-3d btn-yellow px-2.5 py-1.5 rounded-xl font-black"'}>⬇️</button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="flex justify-center gap-3 pt-2">
+              <button onclick="App.checkGame2()" class="btn-3d btn-green px-6 py-3 rounded-2xl font-black text-sm sm:text-base">✅ Periksa Urutan Langkah</button>
+              <button onclick="App.resetGame2Order(); App.renderPage();" class="btn-3d btn-slate px-4 py-3 rounded-2xl font-black text-sm">🔄 Acak Ulang</button>
+            </div>
+            <div id="g2-feedback"></div>
+          </div>
+        `;
+      },
+
+      moveGame2(idx, dir) {
+        AudioEngine.playClick();
+        const target = idx + dir;
+        if (target < 0 || target >= this.g2Order.length) return;
+        const temp = this.g2Order[idx];
+        this.g2Order[idx] = this.g2Order[target];
+        this.g2Order[target] = temp;
+        this.renderPage();
+      },
+
+      checkGame2() {
+        const isCorrect = this.g2Order.every((item, idx) => item.correctIdx === idx);
+        const fb = document.getElementById('g2-feedback');
+        if (isCorrect) {
+          AudioEngine.playSuccess();
+          this.addReward(15, 2);
+          AudioEngine.speak('Hebat! Urutan langkah penyelesaian pecahanmu sudah benar semua!');
+          if (fb) {
+            fb.innerHTML = `<div class="p-4 rounded-2xl bg-emerald-100 border-2 border-emerald-400 text-emerald-900 font-black text-center">🏆 Luar Biasa! Urutan langkahmu tepat 100%! (+15 Poin & 2 Bintang)</div>`;
+          }
+        } else {
+          AudioEngine.playEncourage();
+          AudioEngine.speak('Belum tepat, ayo cek kembali langkah pertama seperti menyamakan penyebut atau mengubah ke pecahan biasa.');
+          if (fb) {
+            fb.innerHTML = `<div class="p-3 rounded-2xl bg-amber-100 border-2 border-amber-400 text-amber-900 font-bold text-sm text-center">💡 Petunjuk: Mulailah dengan mengubah pecahan campuran (jika ada) atau mencari KPK penyebut terlebih dahulu!</div>`;
+          }
+        }
+      },
+
+      // --- GAME 3: BERBURU HARTA KARUN ---
+      renderGame3() {
+        const chests = GAME3_TREASURE[this.gameLevel];
+        const allOpened = this.g3Index >= chests.length;
+        return `
+          <div class="space-y-5 max-w-3xl mx-auto">
+            <!-- Peta Peti Harta Karun -->
+            <div class="grid grid-cols-3 gap-3">
+              ${chests.map((c, idx) => {
+                const opened = idx < this.g3Index;
+                const active = idx === this.g3Index;
+                return `
+                  <div class="p-4 rounded-2xl border-3 text-center transition-all ${opened ? 'bg-emerald-100 border-emerald-500' : active ? 'bg-yellow-100 border-amber-500 scale-105 shadow-md' : 'bg-slate-200 border-slate-300 opacity-60'}">
+                    <div class="text-4xl">${opened ? '💎' : active ? '🧰' : '🔒'}</div>
+                    <p class="font-black text-xs sm:text-sm mt-1 text-slate-800">${c.chest}</p>
+                    <p class="text-[11px] font-bold ${opened ? 'text-emerald-700' : 'text-slate-500'}">${opened ? 'Terbuka!' : active ? 'Sedang Dibuka' : 'Terkunci'}</p>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+
+            ${allOpened ? `
+              <div class="bg-gradient-to-r from-yellow-100 to-amber-200 border-4 border-amber-400 rounded-3xl p-6 text-center space-y-3">
+                <div class="text-6xl">👑🏆💎</div>
+                <h3 class="text-2xl font-black text-amber-950">SELAMAT! Semua Peti Harta Karun Level ${this.gameLevel} Terbuka!</h3>
+                <p class="font-bold text-amber-900">Kamu adalah Penjelajah Pecahan Sejati SDN 3 Kelaten!</p>
+                <div class="flex justify-center gap-3">
+                  ${this.gameLevel < 3 ? `<button onclick="App.setGameLevel(${this.gameLevel + 1})" class="btn-3d btn-green px-6 py-3 rounded-2xl font-black">Lanjut Level ${this.gameLevel + 1} ➡️</button>` : ''}
+                  <button onclick="App.g3Index = 0; App.renderPage();" class="btn-3d btn-orange px-6 py-3 rounded-2xl font-black">Ulangi Berburu 🔄</button>
+                </div>
+              </div>
+            ` : `
+              <div class="bg-white p-5 rounded-3xl border-3 border-orange-300 text-center space-y-4">
+                <span class="bg-orange-100 text-orange-800 text-xs font-black px-3 py-1 rounded-full">Kunci ${chests[this.g3Index].chest}</span>
+                <p class="text-2xl sm:text-3xl font-black text-slate-900">${chests[this.g3Index].q}</p>
+                <div class="grid grid-cols-2 gap-3 max-w-md mx-auto">
+                  ${chests[this.g3Index].opts.map((opt, idx) => `
+                    <button onclick="App.checkGame3(${idx})" class="btn-3d btn-orange py-3.5 rounded-2xl text-lg font-black">${opt}</button>
+                  `).join('')}
+                </div>
+                <div id="g3-feedback"></div>
+              </div>
+            `}
+          </div>
+        `;
+      },
+
+      checkGame3(optIdx) {
+        const chests = GAME3_TREASURE[this.gameLevel];
+        const cur = chests[this.g3Index];
+        const fb = document.getElementById('g3-feedback');
+        if (optIdx === cur.ans) {
+          AudioEngine.playSuccess();
+          this.addReward(10, 1);
+          AudioEngine.speak(`Kunci cocok! ${cur.chest} berhasil dibuka!`);
+          this.showToast(`💎 ${cur.chest} Terbuka! +10 Poin!`, 'success');
+          this.g3Index++;
+          this.renderPage();
+        } else {
+          AudioEngine.playEncourage();
+          AudioEngine.speak('Kunci belum pas. Coba ikuti petunjuk ini: ' + cur.hint);
+          if (fb) {
+            fb.innerHTML = `<div class="p-3 rounded-xl bg-amber-100 border border-amber-400 text-amber-900 font-bold text-sm">🗝️ Petunjuk Kunci: ${cur.hint}</div>`;
+          }
+        }
+      },
+
+      /* =====================================================================
+         MENU 5: LKPD INTERAKTIF & CETAK
+         ===================================================================== */
+      viewLKPD() {
+        const soalHitung = [
+          { no: 1, label: '2/3 + 1/4', w: '', n: '11', d: '12', step: 'KPK(3,4) = 12 → 8/12 + 3/12 = 11/12' },
+          { no: 2, label: '5/6 − 1/3', w: '', n: '1', d: '2', step: 'KPK(6,3) = 6 → 5/6 − 2/6 = 3/6 = 1/2 (atau 3/6)' },
+          { no: 3, label: '1 1/2 + 2 1/3', w: '3', n: '5', d: '6', step: '3/2 + 7/3 = 9/6 + 14/6 = 23/6 = 3 5/6' },
+          { no: 4, label: '3 1/4 − 1 1/2', w: '1', n: '3', d: '4', step: '13/4 − 3/2 = 13/4 − 6/4 = 7/4 = 1 3/4' },
+          { no: 5, label: '2 2/3 + 1 1/4', w: '3', n: '11', d: '12', step: '8/3 + 5/4 = 32/12 + 15/12 = 47/12 = 3 11/12' }
+        ];
+
+        return `
+          <div class="space-y-6">
+            <div class="bg-white rounded-3xl p-5 sm:p-8 border-4 border-purple-300 shadow-xl print-box space-y-6">
+              <!-- Kop LKPD -->
+              <div class="border-b-4 border-double border-slate-800 pb-4 flex flex-wrap items-center justify-between gap-4">
+                <div>
+                  <span class="bg-purple-100 text-purple-800 text-xs font-black px-3 py-1 rounded-full no-print">📝 Lembar Kerja Peserta Didik</span>
+                  <h1 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">LEMBAR KERJA PESERTA DIDIK (LKPD)</h1>
+                  <p class="text-sm font-extrabold text-purple-700">MISI PENJELAJAH PECAHAN — Matematika Kelas V SDN 3 Kelaten</p>
+                </div>
+                <div class="flex gap-2 no-print">
+                  <button onclick="AudioEngine.speak('Silakan isi nama dan kelasmu, lalu kerjakan Kegiatan 1 Ayo Mengamati, Kegiatan 2 Ayo Menghitung, dan Kegiatan 3 Ayo Memecahkan Masalah.')" class="btn-3d btn-yellow px-3.5 py-2 rounded-2xl font-black text-xs">🔊 Petunjuk</button>
+                  <button onclick="window.print()" class="btn-3d btn-purple px-4 py-2 rounded-2xl font-black text-xs sm:text-sm">🖨️ Cetak LKPD</button>
+                </div>
+              </div>
+
+              <!-- Identitas Siswa -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-purple-50 p-4 rounded-2xl border-2 border-purple-200">
+                <div>
+                  <label class="text-xs font-black text-purple-900 uppercase">Nama Peserta Didik:</label>
+                  <input id="lkpd-nama" type="text" placeholder="Ketik nama lengkapmu di sini..." class="w-full mt-1 px-3 py-2 rounded-xl border-2 border-purple-300 bg-white font-bold" />
+                </div>
+                <div>
+                  <label class="text-xs font-black text-purple-900 uppercase">Kelas / Sekolah:</label>
+                  <input id="lkpd-kelas" type="text" value="Kelas V — SDN 3 Kelaten" class="w-full mt-1 px-3 py-2 rounded-xl border-2 border-purple-300 bg-white font-bold" />
+                </div>
+              </div>
+
+              <!-- KEGIATAN 1: AYO MENGAMATI -->
+              <div class="border-2 border-sky-200 rounded-2xl p-5 space-y-4">
+                <h2 class="text-lg font-black text-sky-900 bg-sky-100 px-3 py-1.5 rounded-xl inline-block">🔍 KEGIATAN 1: AYO MENGAMATI</h2>
+                <p class="text-sm font-bold text-slate-700">Amati dua gambar batang pecahan di bawah ini! Tuliskan nilai masing-masing pecahan yang diarsir serta jelaskan mengapa penyebutnya harus disamakan sebelum dijumlahkan!</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-2xl">
+                  <div class="flex flex-col items-center gap-2">
+                    ${MathFrac.svgBar(1, 2, '#38bdf8', 'Gambar A')}
+                    <div class="flex items-center gap-2 text-sm font-black">
+                      <span>Nilai Pecahan A =</span>
+                      <input id="lkpd-k1-a" type="text" placeholder="?/?" class="w-20 text-center py-1 rounded-lg border-2 border-sky-300" />
+                    </div>
+                  </div>
+                  <div class="flex flex-col items-center gap-2">
+                    ${MathFrac.svgBar(1, 3, '#fb923c', 'Gambar B')}
+                    <div class="flex items-center gap-2 text-sm font-black">
+                      <span>Nilai Pecahan B =</span>
+                      <input id="lkpd-k1-b" type="text" placeholder="?/?" class="w-20 text-center py-1 rounded-lg border-2 border-orange-300" />
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label class="text-xs font-black text-slate-700">Hasil Pengamatanmu (Mengapa penyebutnya perlu disamakan dengan KPK?):</label>
+                  <textarea id="lkpd-k1-obs" rows="2" placeholder="Tuliskan penjelasan hasil pengamatanmu di sini..." class="w-full mt-1 p-3 rounded-xl border-2 border-slate-300 text-sm font-semibold"></textarea>
+                </div>
+              </div>
+
+              <!-- KEGIATAN 2: AYO MENGHITUNG -->
+              <div class="border-2 border-emerald-200 rounded-2xl p-5 space-y-4">
+                <h2 class="text-lg font-black text-emerald-900 bg-emerald-100 px-3 py-1.5 rounded-xl inline-block">🧮 KEGIATAN 2: AYO MENGHITUNG</h2>
+                <p class="text-sm font-bold text-slate-700">Hitunglah penjumlahan dan pengurangan pecahan berikut! (Kosongkan kotak bilangan bulat jika hasilnya pecahan biasa).</p>
+                <div class="space-y-3">
+                  ${soalHitung.map(item => `
+                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 flex flex-wrap items-center justify-between gap-3">
+                      <div class="font-black text-base sm:text-lg text-slate-900">
+                        ${item.no}. <span class="text-indigo-700">${item.label}</span> =
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <input id="lkpd-w-${item.no}" type="number" placeholder="Bulat" class="w-16 h-11 text-center rounded-xl border-2 border-emerald-300 bg-white font-black text-sm" />
+                        <div class="flex flex-col items-center gap-1">
+                          <input id="lkpd-n-${item.no}" type="number" placeholder="Pemb." class="w-16 h-9 text-center rounded-lg border-2 border-emerald-400 bg-white font-black text-sm" />
+                          <div class="w-16 h-0.5 bg-slate-800"></div>
+                          <input id="lkpd-d-${item.no}" type="number" placeholder="Peny." class="w-16 h-9 text-center rounded-lg border-2 border-emerald-400 bg-white font-black text-sm" />
+                        </div>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <!-- KEGIATAN 3: AYO MEMECAHKAN MASALAH -->
+              <div class="border-2 border-amber-300 rounded-2xl p-5 space-y-4">
+                <h2 class="text-lg font-black text-amber-900 bg-amber-100 px-3 py-1.5 rounded-xl inline-block">🌟 KEGIATAN 3: AYO MEMECAHKAN MASALAH</h2>
+                <div class="space-y-4">
+                  <div class="bg-amber-50/60 p-4 rounded-2xl border border-amber-200 space-y-2">
+                    <p class="font-extrabold text-slate-900 text-sm sm:text-base">1. Rani memiliki pita sepanjang <b>2 1/2 meter</b>. Ia membeli lagi <b>1 1/4 meter</b>. Berapa panjang pita Rani sekarang?</p>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <span class="text-xs font-black text-slate-600">Jawaban (meter):</span>
+                      <input id="lkpd-c1-w" type="number" placeholder="Bulat" class="w-16 py-1.5 text-center rounded-xl border-2 border-amber-400 bg-white font-black" />
+                      <input id="lkpd-c1-n" type="number" placeholder="Pemb." class="w-16 py-1.5 text-center rounded-xl border-2 border-amber-400 bg-white font-black" />
+                      <span class="font-black">/</span>
+                      <input id="lkpd-c1-d" type="number" placeholder="Peny." class="w-16 py-1.5 text-center rounded-xl border-2 border-amber-400 bg-white font-black" />
+                    </div>
+                  </div>
+
+                  <div class="bg-amber-50/60 p-4 rounded-2xl border border-amber-200 space-y-2">
+                    <p class="font-extrabold text-slate-900 text-sm sm:text-base">2. Ibu mempunyai tepung sebanyak <b>3 1/2 kg</b>. Digunakan sebanyak <b>1 3/4 kg</b> untuk membuat kue. Berapa kg tepung yang tersisa?</p>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <span class="text-xs font-black text-slate-600">Jawaban (kg):</span>
+                      <input id="lkpd-c2-w" type="number" placeholder="Bulat" class="w-16 py-1.5 text-center rounded-xl border-2 border-amber-400 bg-white font-black" />
+                      <input id="lkpd-c2-n" type="number" placeholder="Pemb." class="w-16 py-1.5 text-center rounded-xl border-2 border-amber-400 bg-white font-black" />
+                      <span class="font-black">/</span>
+                      <input id="lkpd-c2-d" type="number" placeholder="Peny." class="w-16 py-1.5 text-center rounded-xl border-2 border-amber-400 bg-white font-black" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tombol Periksa & Hasil LKPD -->
+              <div class="flex flex-wrap items-center justify-center gap-4 no-print">
+                <button onclick="App.checkLKPD()" class="btn-3d btn-green px-7 py-3.5 rounded-2xl font-black text-base">
+                  ✅ Periksa Jawaban LKPD
+                </button>
+                <button onclick="window.print()" class="btn-3d btn-blue px-6 py-3.5 rounded-2xl font-black text-base">
+                  🖨️ Cetak / Simpan PDF LKPD
+                </button>
+              </div>
+              <div id="lkpd-result"></div>
+            </div>
+          </div>
+        `;
+      },
+
+      checkLKPD() {
+        let benar = 0;
+        const totalItem = 9; // 2 pengamatan + 5 hitung + 2 cerita
+        const details = [];
+
+        // Cek Kegiatan 1
+        const k1a = (document.getElementById('lkpd-k1-a')?.value || '').trim();
+        const k1b = (document.getElementById('lkpd-k1-b')?.value || '').trim();
+        if (k1a === '1/2') { benar++; details.push('✅ Pengamatan Gambar A (1/2): Benar'); }
+        else details.push('❌ Pengamatan Gambar A: Seharusnya 1/2');
+
+        if (k1b === '1/3') { benar++; details.push('✅ Pengamatan Gambar B (1/3): Benar'); }
+        else details.push('❌ Pengamatan Gambar B: Seharusnya 1/3');
+
+        // Helper bandingkan nilai pecahan
+        const isFracEqual = (wId, nId, dId, targetImproperNum, targetImproperDen) => {
+          const w = parseInt(document.getElementById(wId)?.value, 10) || 0;
+          const n = parseInt(document.getElementById(nId)?.value, 10);
+          const d = parseInt(document.getElementById(dId)?.value, 10);
+          if (isNaN(n) || isNaN(d) || d <= 0) return false;
+          const userNum = w * d + n;
+          return userNum * targetImproperDen === targetImproperNum * d;
+        };
+
+        // Cek Kegiatan 2
+        const k2Targets = [
+          { no: 1, num: 11, den: 12, text: '2/3 + 1/4 = 8/12 + 3/12 = 11/12' },
+          { no: 2, num: 1, den: 2, text: '5/6 − 1/3 = 5/6 − 2/6 = 3/6 = 1/2' },
+          { no: 3, num: 23, den: 6, text: '1 1/2 + 2 1/3 = 9/6 + 14/6 = 23/6 = 3 5/6' },
+          { no: 4, num: 7, den: 4, text: '3 1/4 − 1 1/2 = 13/4 − 6/4 = 7/4 = 1 3/4' },
+          { no: 5, num: 47, den: 12, text: '2 2/3 + 1 1/4 = 32/12 + 15/12 = 47/12 = 3 11/12' }
+        ];
+        k2Targets.forEach(t => {
+          if (isFracEqual(`lkpd-w-${t.no}`, `lkpd-n-${t.no}`, `lkpd-d-${t.no}`, t.num, t.den)) {
+            benar++;
+            details.push(`✅ Hitung No.${t.no}: Benar (${t.text})`);
+          } else {
+            details.push(`❌ Hitung No.${t.no}: Pembahasan → ${t.text}`);
+          }
+        });
+
+        // Cek Kegiatan 3
+        if (isFracEqual('lkpd-c1-w', 'lkpd-c1-n', 'lkpd-c1-d', 15, 4)) {
+          benar++;
+          details.push('✅ Soal Cerita 1 (Pita Rani): Benar (2 1/2 + 1 1/4 = 3 3/4 meter)');
+        } else {
+          details.push('❌ Soal Cerita 1: 2 1/2 + 1 1/4 = 10/4 + 5/4 = 15/4 = 3 3/4 meter');
+        }
+
+        if (isFracEqual('lkpd-c2-w', 'lkpd-c2-n', 'lkpd-c2-d', 7, 4)) {
+          benar++;
+          details.push('✅ Soal Cerita 2 (Sisa Tepung Ibu): Benar (3 1/2 − 1 3/4 = 1 3/4 kg)');
+        } else {
+          details.push('❌ Soal Cerita 2: 3 1/2 − 1 3/4 = 14/4 − 7/4 = 7/4 = 1 3/4 kg');
+        }
+
+        const skor = Math.round((benar / totalItem) * 100);
+        const nama = (document.getElementById('lkpd-nama')?.value || 'Siswa Hebat').trim();
+        AudioEngine.playSuccess();
+        this.addReward(benar * 5, Math.ceil(benar / 3));
+        AudioEngine.speak(`Pemeriksaan LKPD selesai! ${nama} memperoleh skor ${skor}.`);
+
+        const out = document.getElementById('lkpd-result');
+        if (out) {
+          out.innerHTML = `
+            <div class="bg-gradient-to-r from-purple-50 to-indigo-50 border-3 border-purple-400 rounded-3xl p-5 space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="text-xl font-black text-purple-950">📊 Hasil Pemeriksaan LKPD — ${nama}</h3>
+                <span class="bg-emerald-500 text-white px-4 py-1.5 rounded-2xl font-black text-lg">Skor LKPD: ${skor} / 100</span>
+              </div>
+              <ul class="space-y-1.5 text-sm font-bold text-slate-800 bg-white p-4 rounded-2xl border border-purple-200">
+                ${details.map(d => `<li>${d}</li>`).join('')}
+              </ul>
+            </div>
+          `;
+        }
+      },
+
+      /* =====================================================================
+         MENU 6: EVALUASI PEMBELAJARAN (15 SOAL PILIHAN GANDA)
+         ===================================================================== */
+      viewEvaluasi() {
+        if (this.evalSubmitted) {
+          return this.viewEvaluasiResult();
+        }
+        const q = EVALUASI_SOAL[this.evalIndex];
+        const chosen = this.evalAnswers[this.evalIndex];
+        const answeredCount = this.evalAnswers.filter(x => x !== null).length;
+
+        return `
+          <div class="space-y-6">
+            <div class="bg-white rounded-3xl p-5 sm:p-7 border-4 border-pink-300 shadow-xl space-y-6">
+              <!-- Header Evaluasi -->
+              <div class="flex flex-wrap items-center justify-between gap-3 border-b-2 border-pink-100 pb-4">
+                <div>
+                  <span class="bg-pink-100 text-pink-800 text-xs font-black px-3 py-1 rounded-full">🏅 Asesmen Sumatif Kelas V</span>
+                  <h1 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">Evaluasi Misi Penjelajah Pecahan</h1>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="bg-slate-100 px-3 py-1.5 rounded-xl text-xs font-black text-slate-700">Terjawab: ${answeredCount} / 15</span>
+                  <button onclick="AudioEngine.speak('Soal nomor ${q.no}. ${q.soal.replace(/'/g, "\\'")}')" class="btn-3d btn-yellow px-3.5 py-2 rounded-2xl font-black text-xs">
+                    🔊 Bacakan Soal
+                  </button>
+                </div>
+              </div>
+
+              <!-- Indikator Nomor Soal 1 - 15 -->
+              <div class="flex flex-wrap gap-1.5">
+                ${EVALUASI_SOAL.map((item, idx) => {
+                  const isCur = idx === this.evalIndex;
+                  const isDone = this.evalAnswers[idx] !== null;
+                  return `
+                    <button onclick="App.evalIndex = ${idx}; App.renderPage();" class="w-9 h-9 rounded-xl font-black text-xs transition-all ${isCur ? 'bg-pink-600 text-white scale-110 shadow' : isDone ? 'bg-emerald-200 text-emerald-900 border border-emerald-400' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                      ${item.no}
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+
+              <!-- Kartu Soal Aktif -->
+              <div class="bg-pink-50/60 border-2 border-pink-200 rounded-3xl p-5 sm:p-6 space-y-5">
+                <div class="flex items-center justify-between">
+                  <span class="bg-white border border-pink-300 text-pink-800 px-3 py-1 rounded-full text-xs font-black">Soal No. ${q.no} • ${q.kategori}</span>
+                </div>
+                <p class="text-lg sm:text-xl font-black text-slate-900 leading-relaxed">${q.soal}</p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  ${q.opsi.map((opt, idx) => {
+                    const selected = chosen === idx;
+                    return `
+                      <button onclick="App.selectEvalAnswer(${idx})" class="p-4 rounded-2xl border-3 text-left font-black text-base transition-all flex items-center gap-3 ${selected ? 'bg-pink-600 text-white border-pink-800 shadow-lg scale-[1.01]' : 'bg-white text-slate-800 border-pink-200 hover:bg-pink-100'}">
+                        <span class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${selected ? 'bg-white text-pink-700' : 'bg-pink-100 text-pink-800'}">${['A', 'B', 'C', 'D'][idx]}</span>
+                        <span>${opt}</span>
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+
+              <!-- Navigasi Soal -->
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <button onclick="App.evalIndex = Math.max(0, this.evalIndex - 1); App.renderPage();" ${this.evalIndex === 0 ? 'disabled class="opacity-40 px-4 py-2.5 rounded-2xl bg-slate-200 font-black text-sm"' : 'class="btn-3d btn-slate px-4 py-2.5 rounded-2xl font-black text-sm"'}>
+                  ⬅️ Soal Sebelumnya
+                </button>
+
+                ${this.evalIndex < EVALUASI_SOAL.length - 1 ? `
+                  <button onclick="App.evalIndex++; App.renderPage();" class="btn-3d btn-blue px-6 py-3 rounded-2xl font-black text-sm sm:text-base">
+                    Soal Berikutnya ➡️
+                  </button>
+                ` : `
+                  <button onclick="App.submitEvaluasi()" class="btn-3d btn-green px-7 py-3 rounded-2xl font-black text-sm sm:text-base">
+                    🏁 SELESAI & LIHAT NILAI
+                  </button>
+                `}
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      selectEvalAnswer(optIdx) {
+        AudioEngine.playClick();
+        this.evalAnswers[this.evalIndex] = optIdx;
+        this.renderPage();
+      },
+
+      submitEvaluasi() {
+        AudioEngine.playSuccess();
+        this.evalSubmitted = true;
+        let benar = 0;
+        EVALUASI_SOAL.forEach((q, idx) => {
+          if (this.evalAnswers[idx] === q.kunci) benar++;
+        });
+        const nilai = Math.round((benar / 15) * 100);
+        this.addReward(benar * 10, Math.ceil(benar / 3));
+        AudioEngine.speak(`Evaluasi selesai! Kamu menjawab benar ${benar} dari 15 soal. Nilai akhirmu adalah ${nilai}.`);
+        this.renderPage();
+      },
+
+      viewEvaluasiResult() {
+        let benar = 0;
+        EVALUASI_SOAL.forEach((q, idx) => {
+          if (this.evalAnswers[idx] === q.kunci) benar++;
+        });
+        const salah = 15 - benar;
+        const nilai = Math.round((benar / 15) * 100);
+
+        let predikat = 'Perlu Bimbingan';
+        let badgeColor = 'bg-rose-100 text-rose-800 border-rose-300';
+        if (nilai >= 86) { predikat = 'Sangat Baik (Istimewa)'; badgeColor = 'bg-emerald-100 text-emerald-900 border-emerald-400'; }
+        else if (nilai >= 71) { predikat = 'Baik (Tuntas)'; badgeColor = 'bg-sky-100 text-sky-900 border-sky-400'; }
+        else if (nilai >= 56) { predikat = 'Cukup (Terus Berlatih)'; badgeColor = 'bg-amber-100 text-amber-900 border-amber-400'; }
+
+        return `
+          <div class="space-y-6">
+            <div class="bg-white rounded-3xl p-5 sm:p-8 border-4 border-emerald-400 shadow-xl space-y-6">
+              <div class="text-center space-y-3">
+                <div class="text-6xl">🏆🎓✨</div>
+                <h1 class="text-2xl sm:text-3xl font-black text-slate-900">Hasil Evaluasi Misi Penjelajah Pecahan</h1>
+                <p class="text-sm font-bold text-slate-600">Rumus Penilaian: (Jumlah Benar ÷ 15) × 100</p>
+              </div>
+
+              <!-- Kartu Ringkasan Skor -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                <div class="bg-sky-50 border-2 border-sky-300 p-4 rounded-2xl">
+                  <p class="text-xs font-black text-sky-700 uppercase">Nilai Akhir</p>
+                  <p class="text-4xl font-black text-sky-900 mt-1">${nilai}</p>
+                </div>
+                <div class="bg-emerald-50 border-2 border-emerald-300 p-4 rounded-2xl">
+                  <p class="text-xs font-black text-emerald-700 uppercase">Jawaban Benar</p>
+                  <p class="text-4xl font-black text-emerald-800 mt-1">${benar}</p>
+                </div>
+                <div class="bg-rose-50 border-2 border-rose-300 p-4 rounded-2xl">
+                  <p class="text-xs font-black text-rose-700 uppercase">Jawaban Salah</p>
+                  <p class="text-4xl font-black text-rose-800 mt-1">${salah}</p>
+                </div>
+                <div class="border-2 p-4 rounded-2xl flex flex-col justify-center ${badgeColor}">
+                  <p class="text-xs font-black uppercase">Predikat Belajar</p>
+                  <p class="text-base sm:text-lg font-black mt-1">${predikat}</p>
+                </div>
+              </div>
+
+              <div class="flex justify-center">
+                <button onclick="App.resetEvaluasi()" class="btn-3d btn-orange px-6 py-3 rounded-2xl font-black text-base">
+                  🔄 Ulangi Evaluasi dari Awal
+                </button>
+              </div>
+
+              <!-- Pembahasan Lengkap 15 Soal -->
+              <div class="space-y-3 pt-4 border-t-2 border-slate-100">
+                <h3 class="text-xl font-black text-slate-900">📖 Kunci Jawaban & Pembahasan Lengkap</h3>
+                ${EVALUASI_SOAL.map((q, idx) => {
+                  const userAns = this.evalAnswers[idx];
+                  const isRight = userAns === q.kunci;
+                  const letters = ['A', 'B', 'C', 'D'];
+                  return `
+                    <div class="p-4 rounded-2xl border-2 ${isRight ? 'bg-emerald-50/70 border-emerald-300' : 'bg-rose-50/70 border-rose-300'} space-y-1.5">
+                      <div class="flex flex-wrap items-center justify-between gap-2">
+                        <span class="font-black text-sm text-slate-900">No. ${q.no}. ${q.soal}</span>
+                        <span class="px-2.5 py-0.5 rounded-lg text-xs font-black ${isRight ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'}">
+                          ${isRight ? '✅ Benar' : '❌ Salah'}
+                        </span>
+                      </div>
+                      <p class="text-xs sm:text-sm font-bold text-slate-700">
+                        Jawabanmu: <b>${userAns !== null ? letters[userAns] + '. ' + q.opsi[userAns] : 'Tidak dijawab'}</b> |
+                        Kunci Jawaban: <b class="text-emerald-800">${letters[q.kunci]}. ${q.opsi[q.kunci]}</b>
+                      </p>
+                      <p class="text-xs sm:text-sm font-semibold text-slate-600 bg-white p-2.5 rounded-xl border">
+                        💡 <b>Pembahasan:</b> ${q.pembahasan}
+                      </p>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      resetEvaluasi() {
+        AudioEngine.playClick();
+        this.evalIndex = 0;
+        this.evalAnswers = Array(15).fill(null);
+        this.evalSubmitted = false;
+        this.renderPage();
+      },
+
+      /* =====================================================================
+         MENU 7: PROFIL PENGEMBANG
+         ===================================================================== */
+      viewPengembang() {
+        return `
+          <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 border-4 border-indigo-300 shadow-xl space-y-6">
+              <div class="flex flex-col md:flex-row items-center gap-8">
+                <!-- Ilustrasi SVG Guru Ramah -->
+                <div class="w-48 h-48 rounded-3xl bg-gradient-to-br from-indigo-100 to-sky-100 border-4 border-indigo-300 flex items-center justify-center shrink-0 shadow-md">
+                  <svg viewBox="0 0 180 180" class="w-40 h-40" aria-label="Ilustrasi Guru Kelas V Trilasih, S.Pd.">
+                    <!-- Kerudung Guru -->
+                    <path d="M40,165 C40,95 140,95 140,165 Z" fill="#0284c7"/>
+                    <circle cx="90" cy="78" r="44" fill="#38bdf8"/>
+                    <!-- Wajah -->
+                    <circle cx="90" cy="80" r="32" fill="#fed7aa"/>
+                    <!-- Mata & Kacamata Ramah -->
+                    <circle cx="78" cy="76" r="8" fill="none" stroke="#1e293b" stroke-width="2.2"/>
+                    <circle cx="102" cy="76" r="8" fill="none" stroke="#1e293b" stroke-width="2.2"/>
+                    <line x1="86" y1="76" x2="94" y2="76" stroke="#1e293b" stroke-width="2.2"/>
+                    <circle cx="78" cy="76" r="3" fill="#1e293b"/>
+                    <circle cx="102" cy="76" r="3" fill="#1e293b"/>
+                    <!-- Senyum -->
+                    <path d="M80,92 Q90,102 100,92" fill="none" stroke="#9a3412" stroke-width="3" stroke-linecap="round"/>
+                    <!-- Buku & Apel -->
+                    <rect x="52" y="132" width="76" height="32" rx="8" fill="#facc15" stroke="#a16207" stroke-width="2.5"/>
+                    <text x="90" y="152" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="12" font-weight="bold" fill="#1e293b">GURU KELAS V</text>
+                  </svg>
+                </div>
+
+                <!-- Identitas Lengkap -->
+                <div class="space-y-3 text-center md:text-left flex-1">
+                  <span class="bg-indigo-100 text-indigo-800 text-xs font-black px-3 py-1 rounded-full uppercase">Profil Pengembang MPI</span>
+                  <h1 class="text-2xl sm:text-3xl font-black text-slate-900">Trilasih, S.Pd.</h1>
+                  <p class="text-base font-extrabold text-indigo-700">Guru Kelas V • SDN 3 Kelaten</p>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 text-left text-sm">
+                    <div class="bg-slate-50 p-3 rounded-2xl border">
+                      <span class="text-xs font-black text-slate-400 block">Judul Media</span>
+                      <span class="font-extrabold text-slate-800">Misi Penjelajah Pecahan</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-2xl border">
+                      <span class="text-xs font-black text-slate-400 block">Mata Pelajaran / Fase</span>
+                      <span class="font-extrabold text-slate-800">Matematika • Fase C (Kelas V)</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-2xl border sm:col-span-2">
+                      <span class="text-xs font-black text-slate-400 block">Materi Pokok</span>
+                      <span class="font-extrabold text-slate-800">Penjumlahan dan Pengurangan Pecahan Biasa dan Pecahan Campuran dengan Penyebut Berbeda</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Filosofi Pembelajaran Deep Learning -->
+              <div class="bg-gradient-to-r from-sky-50 via-emerald-50 to-amber-50 p-5 rounded-3xl border-2 border-emerald-200 space-y-2">
+                <h3 class="font-black text-slate-900 text-base">🌱 Pendekatan Pembelajaran Terintegrasi</h3>
+                <p class="text-sm font-semibold text-slate-700 leading-relaxed">
+                  Media Pembelajaran Interaktif ini dirancang dengan memadukan <b>Mindful Learning</b> (tujuan dan langkah belajar yang terstruktur), <b>Meaningful Learning</b> (konteks benda konkret dan masalah sehari-hari), <b>Joyful Learning</b> (simulasi visual, eksperimen pizza, dan permainan edukatif), serta penguatan <b>Growth Mindset</b> bagi peserta didik SDN 3 Kelaten.
+                </p>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    };
+
+    window.onload = function () {
+      App.init();
+    };
+  </script>
+</body>
+</html>
